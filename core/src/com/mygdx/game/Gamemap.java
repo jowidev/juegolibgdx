@@ -3,50 +3,48 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class Gamemap extends ApplicationAdapter {
+public class Gamemap  extends ApplicationAdapter  {
 	private OrthographicCamera camera;
-	private TiledMap tiledMap;
+	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
-	private Viewport viewport;
+	private FitViewport viewport;
 	private SpriteBatch batch;
-	float screenWidth;
-	float screenHeight; //chabon no entiendo una pija
+
 
 	@Override
 	public void create() {
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
+
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, screenWidth, screenHeight);
+		camera.setToOrtho(false, (w/h) * 320, 384);
+		camera.update();
 
 		// Load the tilemap from the .tmx file
-		TmxMapLoader mapLoader = new TmxMapLoader();
-		tiledMap = mapLoader.load("tilemap.tmx");
+		TiledMap map = new TmxMapLoader().load("tilemap.tmx");
 
 		// Create the map renderer
-		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		mapRenderer = new OrthogonalTiledMapRenderer(map);
 
-		viewport = new FitViewport(800, 600, camera);
+		viewport = new FitViewport(800, 800);
 	}
 
 	private void handleInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && camera.position.x > camera.viewportWidth / 2) {
 			camera.translate(-5, 0, 0);
-
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			camera.translate(5, 0, 0);
-
+		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && camera.position.x < WORLD_WIDTH - camera.viewportWidth / 2) {
+			camera.translate(CAME5RA_SPEED, 0, 0);
 		}
-	}
 	public void update() {
 		handleInput();
 		camera.update();
@@ -75,7 +73,9 @@ public class Gamemap extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		// Dispose of resources when the game is closed
-		tiledMap.dispose();
+		map.dispose();
 		mapRenderer.dispose();
 	}
+
+
 }
