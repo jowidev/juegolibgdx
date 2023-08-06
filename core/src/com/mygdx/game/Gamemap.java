@@ -6,26 +6,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Gamemap  extends ApplicationAdapter  {
 	private OrthographicCamera camera;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
+	private final Vector2 mousepos = new Vector2();
 	private FitViewport viewport;
 	private SpriteBatch batch;
-	private MapProperties props;
 
-	float w;
+	float w, h; //width and height parameters
 
 	@Override
 	public void create() {
 		w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+		h = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
 
 		camera = new OrthographicCamera();
@@ -41,7 +41,6 @@ public class Gamemap  extends ApplicationAdapter  {
 		viewport = new FitViewport(800, 800);
 	}
 	private void handleInput(float w) {
-
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
 			camera.translate(-5, 0, 0);
 			if (camera.position.x<=camera.viewportWidth / 2) {
@@ -61,8 +60,8 @@ public class Gamemap  extends ApplicationAdapter  {
 		camera.update();
 	}
 
-	public void resize(int width, int height) {
-		viewport.update(width, height, true);
+	public void resize(int w, int h) {
+		viewport.update(w, h, true);
 	}
 
 	@Override
