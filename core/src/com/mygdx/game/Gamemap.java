@@ -3,10 +3,10 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -18,11 +18,13 @@ public class Gamemap  extends ApplicationAdapter  {
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private FitViewport viewport;
 	private SpriteBatch batch;
+	private MapProperties props;
 
+	float w;
 
 	@Override
 	public void create() {
-		float w = Gdx.graphics.getWidth();
+		w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
 
@@ -38,16 +40,24 @@ public class Gamemap  extends ApplicationAdapter  {
 
 		viewport = new FitViewport(800, 800);
 	}
-	private void handleInput() {
+	private void handleInput(float w) {
+
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
 			camera.translate(-5, 0, 0);
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			if (camera.position.x<=camera.viewportWidth / 2) {
+				camera.translate(5, 0, 0);
+			}
+		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
 			camera.translate(5, 0, 0);
+			if (camera.position.x>=w - camera.viewportWidth / 2) {
+				camera.translate(-5, 0, 0);
+			}
 		}
 	}
-		
+
 	public void update() {
-		handleInput();
+
+		handleInput(w);
 		camera.update();
 	}
 
@@ -60,9 +70,9 @@ public class Gamemap  extends ApplicationAdapter  {
 		// Clear the screen
 		Gdx.gl.glClearColor(.8f, .8f, .8f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.setProjectionMatrix(camera.combined);
 
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
 
 		batch.end();
 		update();
