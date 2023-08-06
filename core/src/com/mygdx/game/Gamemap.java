@@ -38,13 +38,14 @@ public class Gamemap  extends ApplicationAdapter  {
 
 		viewport = new FitViewport(800, 800);
 	}
-
 	private void handleInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && camera.position.x > camera.viewportWidth / 2) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
 			camera.translate(-5, 0, 0);
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && camera.position.x < WORLD_WIDTH - camera.viewportWidth / 2) {
-			camera.translate(CAME5RA_SPEED, 0, 0);
+		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			camera.translate(5, 0, 0);
 		}
+	}
+		
 	public void update() {
 		handleInput();
 		camera.update();
