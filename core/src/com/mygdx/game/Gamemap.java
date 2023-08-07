@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
@@ -13,20 +14,26 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class Gamemap  extends ApplicationAdapter  {
+public class Gamemap  extends Game {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private final Vector2 mousepos = new Vector2();
-	private FitViewport viewport;
-	private SpriteBatch batch;
-	private Camera camera;
+	public FitViewport viewport;
+	public SpriteBatch batch;
+	public Camera camera;
+	public Assets assets;
+	public Plant plant;
+	public Boulder boulder; 
+	
 
 	@Override
 	public void create() {
+		this.assets = new Assets();
+		
 		batch = new SpriteBatch();
 
 		// Load the tilemap from the .tmx file
-		TiledMap map = new TmxMapLoader().load("tilemap.tmx");
+		this.map = new TmxMapLoader().load("tilemap.tmx");
 
 		// Create the map renderer
 		mapRenderer = new OrthogonalTiledMapRenderer(map, constants.pixeltotile, batch);
@@ -34,7 +41,7 @@ public class Gamemap  extends ApplicationAdapter  {
 		viewport = new FitViewport(12, 12);
 		camera = viewport.getCamera();
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
-
+		this.boulder = new Boulder(this);
 	}
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
@@ -48,13 +55,12 @@ public class Gamemap  extends ApplicationAdapter  {
 				camera.translate(-.5f, 0, 0);
 			}
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
+			this.plant = new Plant(this);
+		}
 	}
 
-	public void update() {
 
-		handleInput();
-		camera.update();
-	}
 
 	public void resize(int w, int h) {
 		viewport.update(w, h);
@@ -65,16 +71,23 @@ public class Gamemap  extends ApplicationAdapter  {
 		// Clear the screen
 		Gdx.gl.glClearColor(.8f, .8f, .8f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		handleInput();
 		viewport.apply();
 		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-
-		batch.end();
-
-		update();
-		camera.update();
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
+		if(plant != null) {
+			plant.update();
+			}
+		boulder.update();
+		batch.begin();
+		boulder.render();
+		if(plant != null) {
+		plant.render();
+		}
+		batch.end();
+
+
 	}
 
 	@Override
