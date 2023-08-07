@@ -44,20 +44,38 @@ public class Gamemap  extends Game {
 		this.boulder = new Boulder(this);
 	}
 	private void handleInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-			camera.translate(-.5f, 0, 0);
+		/*if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
+			camera.translate(-.2f, 0, 0);
 			if (camera.position.x<=camera.viewportWidth / 2) {
-				camera.translate(.5f, 0, 0);
+				camera.translate(.2f, 0, 0);
 			}
 		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
-			camera.translate(.5f, 0, 0);
+			camera.translate(.2f, 0, 0);
 			if (camera.position.x>=constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
-				camera.translate(-.5f, 0, 0);
+				camera.translate(-.2f, 0, 0);
 			}
-		}
+		}*/
 		if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
 			this.plant = new Plant(this);
 		}
+
+		if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 50&& Gdx.input.getX() <=Gdx.graphics.getWidth()) {
+			camera.translate(.1f, 0, 0);
+			if (camera.position.x + camera.viewportWidth / 2 < constants.GAME_WORLD_WIDTH_tile) {
+				camera.translate(0, 0, 0);
+			}
+
+		}
+		if (Gdx.input.getX() <= 50&& Gdx.input.getX() >= 0) {
+			camera.translate(-.1f, 0, 0);
+			if (camera.position.x >= constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
+				camera.translate(-.1f, 0, 0);
+			}
+		}
+
+
+
+
 	}
 
 
