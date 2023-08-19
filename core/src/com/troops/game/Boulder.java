@@ -1,13 +1,15 @@
-package com.mygdx.game;
+package com.troops.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Gamemap;
 
 public class Boulder {
-	private final Gamemap game; 
+	public int health;
+	private final Gamemap game;
 	public float stateTime;
 	public Animation<TextureRegion> idleanimation;
 	public Vector2 boulderpos;
@@ -21,7 +23,7 @@ public class Boulder {
 		
 	}
 	public void update() {
-		boulderpos.x -= 0.03;
+		boulderpos.x -= 0.015;
 		
 	}
 	

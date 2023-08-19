@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.troops.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Gamemap;
 
-public class Plant {
-	private final Gamemap game; 
+public class Slime {
+	int health = 100;
+	private final Gamemap game;
 	public Animation<TextureRegion> idleanimation;
 	public float stateTime;
 	public Vector2 slimepos;
@@ -26,7 +28,7 @@ public class Plant {
 		}
 	}
 	
-	public Plant(Gamemap game) {
+	public Slime(Gamemap game) {
 		slimeonmouse = false;
 		stateTime = 0;
 		this.game = game;

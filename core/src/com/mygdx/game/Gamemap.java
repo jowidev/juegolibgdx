@@ -1,18 +1,18 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.troops.game.Boulder;
+import com.troops.game.Slime;
 
 public class Gamemap  extends Game {
 	private TiledMap map;
@@ -22,14 +22,14 @@ public class Gamemap  extends Game {
 	public SpriteBatch batch;
 	public Camera camera;
 	public Assets assets;
-	public Plant plant;
-	public Boulder boulder; 
-	
+	public Slime Slime;
+	public Boulder boulder;
+
 
 	@Override
 	public void create() {
 		this.assets = new Assets();
-		
+
 		batch = new SpriteBatch();
 
 		// Load the tilemap from the .tmx file
@@ -43,20 +43,44 @@ public class Gamemap  extends Game {
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.boulder = new Boulder(this);
 	}
+
+
+
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-			camera.translate(-.5f, 0, 0);
+			camera.translate(-.1f, 0, 0);
 			if (camera.position.x<=camera.viewportWidth / 2) {
-				camera.translate(.5f, 0, 0);
+				camera.translate(.1f, 0, 0);
 			}
 		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
-			camera.translate(.5f, 0, 0);
+			camera.translate(.1f, 0, 0);
 			if (camera.position.x>=constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
-				camera.translate(-.5f, 0, 0);
+				camera.translate(-.1f, 0, 0);
 			}
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-			this.plant = new Plant(this);
+
+		//MOUSE LALLALALAL
+		if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 50&& Gdx.input.getX() <=Gdx.graphics.getWidth()) {
+			camera.translate(.1f, 0, 0);
+			if (camera.position.x>=Gdx.graphics.getWidth()) {
+				camera.translate(-.1f, 0, 0);
+
+			}
+
+		}
+		if (Gdx.input.getX() <= 50&& Gdx.input.getX() >= 0) {
+			camera.translate(-.1f, 0, 0);
+			if (camera.position.x <= 0) {
+				camera.translate(.1f, 0, 0);
+
+			}
+
+		}
+
+
+
+		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+			this.Slime = new Slime(this);
 		}
 	}
 
@@ -65,6 +89,8 @@ public class Gamemap  extends Game {
 	public void resize(int w, int h) {
 		viewport.update(w, h);
 	}
+
+
 
 	@Override
 	public void render() {
@@ -76,14 +102,14 @@ public class Gamemap  extends Game {
 		batch.setProjectionMatrix(camera.combined);
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
-		if(plant != null) {
-			plant.update();
+		if(Slime != null) {
+			Slime.update();
 			}
 		boulder.update();
 		batch.begin();
 		boulder.render();
-		if(plant != null) {
-		plant.render();
+		if(Slime != null) {
+		Slime.render();
 		}
 		batch.end();
 
