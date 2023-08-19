@@ -59,20 +59,17 @@ public class Gamemap  extends Game {
 			}
 		}
 
-		//MOUSE LALLALALAL
-		if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 50&& Gdx.input.getX() <=Gdx.graphics.getWidth()) {
+		//MOUSE
+		if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 50  &&  Gdx.input.getX() <= Gdx.graphics.getWidth()) {
 			camera.translate(.1f, 0, 0);
-			if (camera.position.x>=Gdx.graphics.getWidth()) {
+			if (camera.position.x>=constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
 				camera.translate(-.1f, 0, 0);
-
 			}
-
 		}
 		if (Gdx.input.getX() <= 50&& Gdx.input.getX() >= 0) {
 			camera.translate(-.1f, 0, 0);
-			if (camera.position.x <= 0) {
+			if (camera.position.x <= camera.viewportWidth / 2) {
 				camera.translate(.1f, 0, 0);
-
 			}
 
 		}
