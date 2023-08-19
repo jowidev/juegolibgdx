@@ -11,13 +11,9 @@ public class Assets {
 	public final Array<AtlasRegion> boulderwalk;
 	private final TextureAtlas atlas;
 	public Assets() {
-		
 		this.atlas = new TextureAtlas(Gdx.files.internal("game.atlas"));
         this.plantwalk = atlas.findRegions("planta");
         this.boulderwalk = atlas.findRegions("boulder");
-
-
-        
 	} 
 
 }

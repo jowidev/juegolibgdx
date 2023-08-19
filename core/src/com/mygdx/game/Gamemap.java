@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,16 +25,19 @@ public class Gamemap  extends Game {
 	public Assets assets;
 	public Slime Slime;
 	public Boulder boulder;
+	protected Music trump;
 
 
 	@Override
 	public void create() {
 		this.assets = new Assets();
+		trump = Gdx.audio.newMusic(Gdx.files.internal("trumpsong.mp3"));
+
 
 		batch = new SpriteBatch();
 
 		// Load the tilemap from the .tmx file
-		this.map = new TmxMapLoader().load("tilemap.tmx");
+		this.map = new TmxMapLoader().load("tilemap/tilemap.tmx");
 
 		// Create the map renderer
 		mapRenderer = new OrthogonalTiledMapRenderer(map, constants.pixeltotile, batch);
@@ -42,6 +46,8 @@ public class Gamemap  extends Game {
 		camera = viewport.getCamera();
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.boulder = new Boulder(this);
+		//trump.play();
+
 	}
 
 
@@ -118,6 +124,8 @@ public class Gamemap  extends Game {
 		// Dispose of resources when the game is closed
 		map.dispose();
 		mapRenderer.dispose();
+		trump.dispose();
+
 	}
 
 
