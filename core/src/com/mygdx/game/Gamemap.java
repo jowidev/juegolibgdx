@@ -10,29 +10,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.troops.game.Assets;
 import com.troops.game.Boulder;
 import com.troops.game.Slime;
 
-public class Gamemap  extends Game {
+import javax.swing.*;
+
+public class Gamemap extends Game {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
-	private final Vector2 mousepos = new Vector2();
 	public FitViewport viewport;
 	public SpriteBatch batch;
 	public Camera camera;
 	public Assets assets;
 	public Slime Slime;
-	public Boulder boulder;
+	public Boulder Boulder;
 	protected Music trump;
+
 
 
 	@Override
 	public void create() {
 		this.assets = new Assets();
 		trump = Gdx.audio.newMusic(Gdx.files.internal("trumpsong.mp3"));
-
 
 		batch = new SpriteBatch();
 
@@ -45,8 +47,9 @@ public class Gamemap  extends Game {
 		viewport = new FitViewport(12, 12);
 		camera = viewport.getCamera();
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
-		this.boulder = new Boulder(this);
-		//trump.play();
+		this.Boulder = new Boulder(this);
+		trump.setVolume(.1f);
+		trump.play();
 
 	}
 
@@ -97,26 +100,24 @@ public class Gamemap  extends Game {
 
 	@Override
 	public void render() {
-		// Clear the screen
-		Gdx.gl.glClearColor(.8f, .8f, .8f, 1);
+		Gdx.gl.glClearColor(.9f, .79f, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		handleInput();
 		viewport.apply();
+
 		batch.setProjectionMatrix(camera.combined);
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
 		if(Slime != null) {
 			Slime.update();
-			}
-		boulder.update();
+		}
+		Boulder.update();
 		batch.begin();
-		boulder.render();
+		Boulder.render();
 		if(Slime != null) {
 		Slime.render();
 		}
 		batch.end();
-
-
 	}
 
 	@Override
