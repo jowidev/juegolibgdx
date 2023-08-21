@@ -19,9 +19,7 @@ public class Slime {
 	private boolean slimeonmouse;
 	public Rectangle slimecollider;
 
-	public void setupCollider() {
-		slimecollider  = new Rectangle (slimepos.x , slimepos.y ,32,32) ;
-	}
+
 	public void update(){
 		if(slimeonmouse==false) {
 			Vector3 position = game.viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));

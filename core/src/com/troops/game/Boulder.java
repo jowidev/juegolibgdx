@@ -25,8 +25,7 @@ public class Boulder {
 		stateTime = 0;
 		this.game = game;
 		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
-		boulderpos= new Vector2(19,random.nextFloat());
-
+		boulderpos= new Vector2(19,10*random.nextFloat());
 	}
 
 
