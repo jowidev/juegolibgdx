@@ -34,7 +34,9 @@ public class Gamemap extends Game {
 	@Override
 	public void create() {
 		this.assets = new Assets();
+		Grid grid = new Grid();
 		stage = new Stage();
+		stage.addActor(grid);
 		Gdx.input.setInputProcessor(stage);
 
 		trump = Gdx.audio.newMusic(Gdx.files.internal("trumpsong.mp3"));
@@ -46,7 +48,7 @@ public class Gamemap extends Game {
  
 		mapRenderer = new OrthogonalTiledMapRenderer(map, constants.pixeltotile, batch); // Create the map renderer
 
-		viewport = new FitViewport(12, 12);
+		viewport = new FitViewport(20.45f, 12);
 		camera = viewport.getCamera();
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.Boulder = new Boulder(this);
@@ -94,7 +96,6 @@ public class Gamemap extends Game {
 
 	public void resize(int w, int h) {
 		viewport.update(w, h);
-		stage.getViewport().update(w, h, true);
 
 	}
 
@@ -106,8 +107,7 @@ public class Gamemap extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		handleInput();
 		viewport.apply();
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+
 		batch.setProjectionMatrix(camera.combined);
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
@@ -121,6 +121,8 @@ public class Gamemap extends Game {
 		Slime.render();
 		}
 		batch.end();
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
 	}
 
 	@Override

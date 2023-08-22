@@ -31,7 +31,7 @@ public class Boulder {
 
 
 	public void update() {
-		boulderpos.x -= 0.01;
+		boulderpos.x -= .5f*Gdx.graphics.getDeltaTime();
 		
 	}
 	public void show() {
