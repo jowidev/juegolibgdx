@@ -27,7 +27,7 @@ public class Gamemap extends Game {
 	public Assets assets;
 	public Slime Slime;
 	public Boulder Boulder;
-	private Music trump;
+	private Music mainsong;
 	public Stage stage;
 
 
@@ -39,21 +39,21 @@ public class Gamemap extends Game {
 		stage.addActor(grid);
 		Gdx.input.setInputProcessor(stage);
 
-		trump = Gdx.audio.newMusic(Gdx.files.internal("trumpsong.mp3"));
-		trump.setVolume(.1f);
+		mainsong = Gdx.audio.newMusic(Gdx.files.internal("gloriousmorning.mp3"));
+		mainsong.setLooping(true);
+		mainsong.setVolume(.07f);
 		batch = new SpriteBatch();
-
+		
 		this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// Load the tmp
 
  
 		mapRenderer = new OrthogonalTiledMapRenderer(map, constants.pixeltotile, batch); // Create the map renderer
 
-		viewport = new FitViewport(20.45f, 12);
+		viewport = new FitViewport(20.1509f, 12); //hay que hacerlo de 12x12
 		camera = viewport.getCamera();
 		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.Boulder = new Boulder(this);
-		//trump.play();
-
+		mainsong.play();
 	}
 
 
@@ -103,7 +103,7 @@ public class Gamemap extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(.9f, .79f, 1, 1);
+		Gdx.gl.glClearColor(.4f, .79f, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		handleInput();
 		viewport.apply();
@@ -111,6 +111,8 @@ public class Gamemap extends Game {
 		batch.setProjectionMatrix(camera.combined);
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
 		if(Slime != null) {
 			Slime.update();
 		}
@@ -121,8 +123,7 @@ public class Gamemap extends Game {
 		Slime.render();
 		}
 		batch.end();
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+
 	}
 
 	@Override
@@ -130,7 +131,7 @@ public class Gamemap extends Game {
 		//se llama cuando se cierra el programa 
 		map.dispose();
 		mapRenderer.dispose();
-		trump.dispose();
+		mainsong.dispose();
 		stage.dispose();
 
 	}
