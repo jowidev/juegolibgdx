@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,12 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troops.game.Assets;
 import com.troops.game.Boulder;
 import com.troops.game.Slime;
-import com.mygdx.game.Grid;
 
 public class Gamemap extends Game {
 	private TiledMap map;
@@ -29,7 +28,7 @@ public class Gamemap extends Game {
 	public Boulder Boulder;
 	private Music mainsong;
 	public Stage stage;
-
+	public static Sound sound;
 
 	@Override
 	public void create() {
@@ -38,20 +37,21 @@ public class Gamemap extends Game {
 		stage = new Stage();
 		stage.addActor(grid);
 		Gdx.input.setInputProcessor(stage);
-
-		mainsong = Gdx.audio.newMusic(Gdx.files.internal("gloriousmorning.mp3"));
+		mainsong = Gdx.audio.newMusic(Gdx.files.internal("finalbattle.mp3"));
+		sound = Gdx.audio.newSound(Gdx.files.internal("slimeplaced.mp3"));
 		mainsong.setLooping(true);
 		mainsong.setVolume(.07f);
+
 		batch = new SpriteBatch();
-		
+
 		this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// Load the tmp
 
  
-		mapRenderer = new OrthogonalTiledMapRenderer(map, constants.pixeltotile, batch); // Create the map renderer
+		mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, batch); // Create the map renderer
 
-		viewport = new FitViewport(20.1509f, 12); //hay que hacerlo de 12x12
+		viewport = new FitViewport(20.45f, 12); //hay que hacerlo de 12x12
 		camera = viewport.getCamera();
-		camera.position.set(constants.GAME_WORLD_WIDTH_tile/2, constants.GAME_WORLD_HEIGHT_tile/2, 0);
+		camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.Boulder = new Boulder(this);
 		mainsong.play();
 	}
@@ -66,7 +66,7 @@ public class Gamemap extends Game {
 			}
 		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
 			camera.translate(.09f, 0, 0);
-			if (camera.position.x>=constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
+			if (camera.position.x>= Constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
 				camera.translate(-.09f, 0, 0);
 			}
 		}
@@ -74,7 +74,7 @@ public class Gamemap extends Game {
 		//MOUSE
 		if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 150  &&  Gdx.input.getX() <= Gdx.graphics.getWidth()) {
 			camera.translate(.15f, 0, 0);
-			if (camera.position.x>=constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
+			if (camera.position.x>= Constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
 				camera.translate(-.15f, 0, 0);
 			}
 		}
@@ -89,6 +89,7 @@ public class Gamemap extends Game {
 		//aca vienen inputs de gameplay (mariconadas) 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
 			this.Slime = new Slime(this);
+			//sound.play();
 		}
 	}
 
@@ -96,14 +97,13 @@ public class Gamemap extends Game {
 
 	public void resize(int w, int h) {
 		viewport.update(w, h);
-
 	}
 
 
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(.4f, .79f, 1, 1);
+		Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		handleInput();
 		viewport.apply();

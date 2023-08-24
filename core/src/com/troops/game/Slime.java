@@ -17,7 +17,6 @@ public class Slime {
 	public float stateTime;
 	public Vector2 slimepos;
 	private boolean slimeonmouse;
-	public Rectangle slimecollider;
 
 
 	public void update(){
@@ -28,9 +27,10 @@ public class Slime {
 		}
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && slimeonmouse==false) {
 			slimeonmouse = true;
+			Gamemap.sound.play();
 		}
 	}
-	
+
 	public Slime(Gamemap game) {
 		slimeonmouse = false;
 		stateTime = 0;
@@ -42,7 +42,5 @@ public class Slime {
 		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
 		game.batch.draw(currentFrame, slimepos.x, slimepos.y,2,2); // Draw current frame at (50, 50)
-		
-		
 	}
 }

@@ -1,5 +1,6 @@
 package com.troops.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +12,6 @@ import com.mygdx.game.Gamemap;
 import java.util.Random;
 
 public class Boulder {
-	public Rectangle bouldercollider;
 	public int health;
 	private final Gamemap game;
 	public float stateTime;
@@ -21,18 +21,19 @@ public class Boulder {
 
 
 	public Boulder(Gamemap game) {
-		
 		stateTime = 0;
 		this.game = game;
+		int row = random.nextInt(5); // This will give you a value from 0 to 4.
+
 		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
 		boulderpos= new Vector2(19,10*random.nextFloat());
+
 	}
 
 
 
 	public void update() {
 		boulderpos.x -= .5f*Gdx.graphics.getDeltaTime();
-		
 	}
 	public void show() {
 
@@ -40,9 +41,7 @@ public class Boulder {
 	public void render() {
 		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
-		game.batch.draw(currentFrame, boulderpos.x, boulderpos.y,2,2); // Draw current frame at (50, 50)
-
-
+		game.batch.draw(currentFrame, boulderpos.x, boulderpos.y,2,2);
 	}
 	
 
