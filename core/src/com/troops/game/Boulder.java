@@ -18,15 +18,15 @@ public class Boulder {
 	public Animation<TextureRegion> idleanimation;
 	public Vector2 boulderpos;
 	Random random = new Random();
+	int randomNumber = random.nextInt(5) + 1;
 
 
 	public Boulder(Gamemap game) {
 		stateTime = 0;
 		this.game = game;
-		int row = random.nextInt(5); // This will give you a value from 0 to 4.
 
 		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
-		boulderpos= new Vector2(19,10*random.nextFloat());
+		boulderpos= new Vector2(19,1.28f*randomNumber);
 
 	}
 
@@ -43,6 +43,6 @@ public class Boulder {
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
 		game.batch.draw(currentFrame, boulderpos.x, boulderpos.y,2,2);
 	}
-	
+
 
 }
