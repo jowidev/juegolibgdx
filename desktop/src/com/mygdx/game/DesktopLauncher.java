@@ -17,8 +17,8 @@ public class DesktopLauncher {
 		config.setWindowedMode(1024,768);
 		config.setForegroundFPS(60);
 		config.useVsync(true);
-		config.setWindowIcon("AngyBowler.png");
-		config.setTitle("helsinki");
+		config.setWindowIcon("miscAssets/AngyBowler.png");
+		config.setTitle("Helsinki");
 		new Lwjgl3Application(new Gamemap(), config);
 	}
 }

@@ -38,8 +38,8 @@ public class Gamemap extends Game {
 		stage = new Stage();
 		stage.addActor(grid);
 		Gdx.input.setInputProcessor(stage);
-		mainsong = Gdx.audio.newMusic(Gdx.files.internal("finalbattle.mp3"));
-		sound = Gdx.audio.newSound(Gdx.files.internal("slimeplaced.mp3"));
+		mainsong = Gdx.audio.newMusic(Gdx.files.internal("miscAssets/finalbattle.mp3"));
+		sound = Gdx.audio.newSound(Gdx.files.internal("slimes/slimeplaced.mp3"));
 		mainsong.setLooping(true);
 		mainsong.setVolume(.07f);
 
@@ -50,12 +50,13 @@ public class Gamemap extends Game {
  
 		mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, batch); // Create the map renderer
 
-		viewport = new FitViewport(20.45f, 12); //hay que hacerlo de 12x12
+		viewport = new FitViewport(20, 12); //hay que hacerlo de 12x12
 
 		camera = viewport.getCamera();
 		camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
+		mainsong.play();
 		this.Boulder = new Boulder(this);
-		//mainsong.play();
+
 	}
 
 
@@ -93,6 +94,11 @@ public class Gamemap extends Game {
 			this.Slime = new Slime(this);
 			//sound.play();
 		}
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
+			this.Boulder = new Boulder(this);
+
+		}
 	}
 
 
@@ -109,7 +115,6 @@ public class Gamemap extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		handleInput();
 		viewport.apply();
-
 		batch.setProjectionMatrix(camera.combined);
 		mapRenderer.setView(camera.combined, 0,0 ,21, 12);
 		mapRenderer.render();
