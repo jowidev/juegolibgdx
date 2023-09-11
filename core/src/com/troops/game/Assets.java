@@ -11,13 +11,12 @@ import com.badlogic.gdx.utils.Array;
 public class Assets {
 	private AssetManager manager;
 
-	AssetManager manager = new AssetManager();
+	AssetManager Manager = new AssetManager();
 	public final Array<AtlasRegion> slimewalk;
 	public final Array<AtlasRegion> boulderwalk;
 	private final TextureAtlas atlas;
+	
 	public Assets() {
-		manager.load("slimes/slime-idle-0.png", TextureAtlas.class);
-		atlas = manager.get("game.atlas", TextureAtlas.class);
 
 		this.atlas = new TextureAtlas(Gdx.files.internal("game.atlas"));
         this.slimewalk = atlas.findRegions("slime");
