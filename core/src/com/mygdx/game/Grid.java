@@ -11,11 +11,10 @@ public class Grid extends Table {
 
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 9; col++) {
-                add().width(100).height(128); // Customize the width and height as per your requirements
+                add().width(Gdx.graphics.getHeight()*(Constants.pixeltotile*4)+3.2f).height(Gdx.graphics.getWidth()*(Constants.pixeltotile*4)); // Customize the width and height as per your requirements
             }
-            row(); // Move to the next row in the grid
+            row();
         }
-
 
         setPosition(0, 0);
         setDebug(true);

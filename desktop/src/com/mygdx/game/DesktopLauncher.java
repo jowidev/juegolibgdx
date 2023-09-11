@@ -9,10 +9,12 @@ public class DesktopLauncher {
 		Settings settings = new Settings();
         settings.maxWidth = 4096;
         settings.maxHeight = 4096;
+		settings.minWidth = 128;
+		settings.minHeight = 128;
         settings.alias = false;
      //   TexturePacker.process(settings, "../assets", "../assets", "game");
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setWindowedMode(1024, 768);
+		config.setWindowedMode(1024,768);
 		config.setForegroundFPS(60);
 		config.useVsync(true);
 		config.setWindowIcon("AngyBowler.png");

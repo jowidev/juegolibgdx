@@ -51,10 +51,11 @@ public class Gamemap extends Game {
 		mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, batch); // Create the map renderer
 
 		viewport = new FitViewport(20.45f, 12); //hay que hacerlo de 12x12
+
 		camera = viewport.getCamera();
 		camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
 		this.Boulder = new Boulder(this);
-		mainsong.play();
+		//mainsong.play();
 	}
 
 
