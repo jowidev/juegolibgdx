@@ -11,7 +11,7 @@ public class Grid extends Table {
 
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 9; col++) {
-                add().width(Gdx.graphics.getHeight()*(Constants.pixeltotile*4)+6).height(Gdx.graphics.getWidth()*(Constants.pixeltotile*4)); // Customize the width and height as per your requirements
+                add().width(Gdx.graphics.getHeight()*(Constants.pixeltotile*4)+6).height(Gdx.graphics.getWidth()*(Constants.pixeltotile*4));
             }
             row();
         }

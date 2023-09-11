@@ -54,7 +54,7 @@ public class Gamemap extends Game {
 
 		camera = viewport.getCamera();
 		camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
-		mainsong.play();
+		//mainsong.play();
 		this.Boulder = new Boulder(this);
 
 	}
