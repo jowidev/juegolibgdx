@@ -27,15 +27,16 @@ public class Boulder {
 
 		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
 		boulderpos= new Vector2(17,1.28f*randomNumber); //usa 17 tiles idk why
-		if (boulderpos.x<0) {
-			boulderpos.x=19;
-		}
+
 	}
 
 
 
 	public void update() {
-		boulderpos.x -= .5f*Gdx.graphics.getDeltaTime();
+		boulderpos.x -= 2*Gdx.graphics.getDeltaTime();
+		if (boulderpos.x<-2) {
+			boulderpos.x=17;
+		}
 	}
 	public void show() {
 
