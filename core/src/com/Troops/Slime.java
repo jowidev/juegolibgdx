@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Gamemap;
 
 public class Slime {
@@ -18,15 +19,15 @@ public class Slime {
 	private boolean slimeonmouse;
 
 
-	public void update(){
+	public void update(Viewport viewport){
 		if(!slimeonmouse) {
-			Vector3 position = game.viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+			Vector3 position = viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
 			slimepos.x = position.x;
 			slimepos.y = position.y;
 		}
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !slimeonmouse) {
 			slimeonmouse = true;
-			Gamemap.sound.play();
+			game.assets.slimeplaced.play();
 		}
 	}
 

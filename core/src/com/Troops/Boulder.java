@@ -26,7 +26,7 @@ public class Boulder {
 		this.game = game;
 
 		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
-		boulderpos= new Vector2(17,1.28f*randomNumber); //usa 17 tiles idk why
+		boulderpos= new Vector2(17,1.28f*randomNumber);
 
 	}
 

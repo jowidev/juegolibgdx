@@ -28,16 +28,11 @@ public class Gamemap extends Game {
 	@Override
 	public void create() {
 		this.assets = new Assets();
-		this.setScreen(new MainMenu(this));
 
 		batch = new SpriteBatch();
 
-
+		this.setScreen(new MainMenu(this)); //va ultimo
 	}
-
-
-
-
 
 
 
@@ -49,7 +44,7 @@ public class Gamemap extends Game {
 
 	@Override
 	public void render() {
-
+		super.render(); //llama al render parent
 
 	}
 

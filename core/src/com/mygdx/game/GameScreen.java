@@ -20,7 +20,6 @@ public class GameScreen implements Screen {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
     public FitViewport viewport;
-    public SpriteBatch batch;
     public Camera camera;
     public com.Troops.Slime Slime;
     public com.Troops.Boulder Boulder;
@@ -33,23 +32,24 @@ public class GameScreen implements Screen {
 
     }
     public GameScreen(Gamemap gamemap) { //crear boludeces //este
+        this.gamemap = gamemap; //al de arriba le paso este
         Grid grid = new Grid();
         stage = new Stage();
         stage.addActor(grid);
         Gdx.input.setInputProcessor(stage);
-        mainsong = Gdx.audio.newMusic(Gdx.files.internal("miscAssets/finalbattle.mp3"));
-        sound = Gdx.audio.newSound(Gdx.files.internal("slimes/slimeplaced.mp3"));
+        mainsong = gamemap.assets.trumpsong;
         mainsong.setLooping(true);
-        mainsong.setVolume(.07f);
-        this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// Load the tmp
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, batch); // Create the map renderer
+        //mainsong.setVolume(.07f);
+        this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// mandarlo al assetmanager dsp si hincha las bolas
+        mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, gamemap.batch); // Create the map renderer
         viewport = new FitViewport(20, 12); //hay que hacerlo de 12x12
         camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
-        //mainsong.play();
+        mainsong.play();
         this.Boulder = new Boulder(gamemap);
-        this.gamemap = gamemap; //al de arriba le paso este
     }
+
+
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
             camera.translate(-.09f, 0, 0);
@@ -84,32 +84,34 @@ public class GameScreen implements Screen {
             //sound.play();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) { //SIEMPRE QUE SE USA EL BATCH ES gamemap.batch
             this.Boulder = new Boulder(gamemap);
 
         }
     }
+
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput();
         viewport.apply();
-        batch.setProjectionMatrix(camera.combined);
+        gamemap.batch.setProjectionMatrix(camera.combined);
         mapRenderer.setView(camera.combined, 0,0 ,21, 12);
         mapRenderer.render();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         if(Slime != null) {
-            Slime.update();
+            Slime.update(viewport);
         }
         Boulder.update();
-        batch.begin();
+        gamemap.batch.begin();
         Boulder.render();
         if(Slime != null) {
             Slime.render();
         }
-        batch.end();
+        gamemap.batch.end();
     }
 
     @Override

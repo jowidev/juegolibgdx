@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.MenuScreens.MainMenu;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
@@ -12,7 +13,7 @@ public class DesktopLauncher { //funcion principal
         settings.maxHeight = 4096;
         settings.alias = false;
 
-		TexturePacker.process(settings, "slimes", "assets", "game");
+		TexturePacker.processIfModified(settings, "./", "./",  "game"); //name del atlas
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setWindowedMode(1024,768);
 		config.setWindowSizeLimits(400, 320, Integer.MAX_VALUE, Integer.MAX_VALUE);
