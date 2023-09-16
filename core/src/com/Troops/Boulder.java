@@ -1,4 +1,4 @@
-package com.troops.game;
+package com.Troops;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
