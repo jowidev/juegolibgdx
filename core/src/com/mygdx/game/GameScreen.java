@@ -9,23 +9,25 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameScreen implements Screen {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
     public FitViewport viewport;
-    public Camera camera;
+    public OrthographicCamera camera;
+
     public com.Troops.Slime Slime;
     public com.Troops.Boulder Boulder;
     private final Music mainsong;
     public Stage stage;
-    public Sound sound;
     public Gamemap gamemap; //el de arriba
     @Override
     public void show() {
@@ -34,16 +36,17 @@ public class GameScreen implements Screen {
     public GameScreen(Gamemap gamemap) { //crear boludeces //este
         this.gamemap = gamemap; //al de arriba le paso este
         Grid grid = new Grid();
+        camera = new OrthographicCamera();
         stage = new Stage();
         stage.addActor(grid);
         Gdx.input.setInputProcessor(stage);
-        mainsong = gamemap.assets.trumpsong;
+        mainsong = gamemap.assets.finalbattle;
         mainsong.setLooping(true);
-        //mainsong.setVolume(.07f);
+        mainsong.setVolume(.07f);
         this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// mandarlo al assetmanager dsp si hincha las bolas
         mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, gamemap.batch); // Create the map renderer
-        viewport = new FitViewport(20, 12); //hay que hacerlo de 12x12
-        camera = viewport.getCamera();
+        this.viewport = new FitViewport(Constants.GAME_WORLD_WIDTH_tile,Constants.GAME_WORLD_HEIGHT_tile, camera); //hay que hacerlo de 12x12
+        //camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
         mainsong.play();
         this.Boulder = new Boulder(gamemap);
@@ -81,12 +84,14 @@ public class GameScreen implements Screen {
         //aca vienen inputs de gameplay (mariconadas)
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             this.Slime = new Slime(gamemap);
-            //sound.play();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) { //SIEMPRE QUE SE USA EL BATCH ES gamemap.batch
             this.Boulder = new Boulder(gamemap);
 
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
         }
     }
 
@@ -96,28 +101,40 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput();
-        viewport.apply();
+
+        // Set the projection matrix for your batch
         gamemap.batch.setProjectionMatrix(camera.combined);
-        mapRenderer.setView(camera.combined, 0,0 ,21, 12);
+
+        mapRenderer.setView((OrthographicCamera)viewport.getCamera());
         mapRenderer.render();
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        if(Slime != null) {
+
+        if (Slime != null) {
             Slime.update(viewport);
         }
+
         Boulder.update();
+
         gamemap.batch.begin();
         Boulder.render();
-        if(Slime != null) {
+
+        if (Slime != null) {
             Slime.render();
         }
+
         gamemap.batch.end();
+
     }
+
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        camera.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
     }
+
 
     @Override
     public void pause() {

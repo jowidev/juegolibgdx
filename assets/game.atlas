@@ -103,7 +103,7 @@ skin/freezing-ui
   index: -1
 
 game3.png
-size: 2048, 2048
+size: 4096, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -112,6 +112,13 @@ miscAssets/AngyBowler
   xy: 2, 2
   size: 1920, 1920
   orig: 1920, 1920
+  offset: 0, 0
+  index: -1
+miscAssets/fnaf
+  rotate: false
+  xy: 1924, 1382
+  size: 960, 540
+  orig: 960, 540
   offset: 0, 0
   index: -1
 

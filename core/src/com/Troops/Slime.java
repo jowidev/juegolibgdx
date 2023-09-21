@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Constants;
 import com.mygdx.game.Gamemap;
-
+	
 public class Slime {
 	int health = 100;
 	private final Gamemap game;
@@ -17,6 +18,7 @@ public class Slime {
 	public float stateTime;
 	public Vector2 slimepos;
 	private boolean slimeonmouse;
+
 
 
 	public void update(Viewport viewport){
