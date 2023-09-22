@@ -12,7 +12,7 @@ import com.mygdx.game.Constants;
 import com.mygdx.game.Gamemap;
 	
 public class Slime {
-	int health = 100;
+
 	private final Gamemap game;
 	public Animation<TextureRegion> idleanimation;
 	public float stateTime;
@@ -24,8 +24,8 @@ public class Slime {
 	public void update(Viewport viewport){
 		if(!slimeonmouse) {
 			Vector3 position = viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
-			slimepos.x = position.x;
-			slimepos.y = position.y;
+			slimepos.x = position.x-1;
+			slimepos.y = position.y-1;
 		}
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !slimeonmouse) {
 			slimeonmouse = true;

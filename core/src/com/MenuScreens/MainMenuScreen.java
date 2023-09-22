@@ -50,7 +50,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         viewport = new FitViewport(640,480, cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        bgImg.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
+        bgImg.setSize(640, 480);
         stage.addActor(bgImg);
 
         MainTable = new Table();
@@ -59,7 +59,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
         MainTable.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
         MainTable.setPosition(0,0);
-        MainTable.setDebug(true);
+        //MainTable.setDebug(true);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        //viewport.update(width, height);
         cam.position.set(cam.viewportWidth/2, cam.viewportHeight / 2f, 0);
         stage.getViewport().update(width, height, true);
 

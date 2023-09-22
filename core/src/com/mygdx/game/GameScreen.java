@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.MenuScreens.HUD;
 import com.Troops.Boulder;
 import com.Troops.Slime;
 import com.badlogic.gdx.Gdx;
@@ -33,12 +34,16 @@ public class GameScreen implements Screen {
     public void show() {
 
     }
-    public GameScreen(Gamemap gamemap) { //crear boludeces //este
+    public GameScreen(Gamemap gamemap) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
         Grid grid = new Grid();
+        HUD hud = new HUD();
         camera = new OrthographicCamera();
         stage = new Stage();
-        stage.addActor(grid);
+       stage.addActor(grid);
+        stage.addActor(hud.getSlimeTable());
+        stage.addActor(hud.getTimerTable());
+        stage.addActor(hud.getBoulderHud());
         Gdx.input.setInputProcessor(stage);
         mainsong = gamemap.assets.finalbattle;
         mainsong.setLooping(true);
@@ -48,7 +53,7 @@ public class GameScreen implements Screen {
         this.viewport = new FitViewport(Constants.GAME_WORLD_WIDTH_tile,Constants.GAME_WORLD_HEIGHT_tile, camera); //hay que hacerlo de 12x12
         //camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
-        mainsong.play();
+        //mainsong.play();
         this.Boulder = new Boulder(gamemap);
     }
 
@@ -98,7 +103,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
+        Gdx.gl.glClearColor(.4f,.6f,.8f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput();
 
@@ -107,13 +112,13 @@ public class GameScreen implements Screen {
 
         mapRenderer.setView((OrthographicCamera)viewport.getCamera());
         mapRenderer.render();
-
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
-
         if (Slime != null) {
             Slime.update(viewport);
         }
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+
+
 
         Boulder.update();
 
