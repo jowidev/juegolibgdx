@@ -1,4 +1,4 @@
-package com.Troops;
+package com.mygdx.game;
 
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;

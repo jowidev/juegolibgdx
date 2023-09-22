@@ -1,9 +1,10 @@
 package com.MenuScreens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,42 +13,55 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.*;
-import com.Troops.Assets;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Assets;
+import com.mygdx.game.Constants;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Gamemap;
 
-import static com.Troops.Assets.SKIN;
+import static com.mygdx.game.Assets.SKIN;
 
-public class MainMenu extends ScreenAdapter  { //implements screen?
+public class MainMenuScreen extends ScreenAdapter  { //implements screen?
     private final Stage stage;
     private final Viewport viewport;
     private Assets assets;
     private final Skin skin;
-    private Table MainTable;
+    private final OrthographicCamera cam;
+    private final Table MainTable;
     public Gamemap gamemap;
-    public MainMenu(final Gamemap gamemap) {
+    public MainMenuScreen(final Gamemap gamemap) {
         this.assets = gamemap.assets;
-        skin = assets.manager.get(SKIN);
-        this.gamemap = gamemap;
-
         Texture backgroundTexture = new Texture(Gdx.files.internal("miscAssets/fnaf.jpg"));
-        Image backgroundImage = new Image(backgroundTexture);
+        Image bgImg = new Image(backgroundTexture);
+        skin = assets.manager.get(SKIN);
 
-        viewport = new ScreenViewport(); // Set the viewport with the batch
+        this.gamemap = gamemap;
+        //OrthographicCamera cam = new OrthographicCamera();
+        cam = new OrthographicCamera();
+        cam.setToOrtho(false, Constants.GAME_WORLD_WIDTH_tile, Constants.GAME_WORLD_HEIGHT_tile);
+
+
+        //cam.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
+
+
+
+        viewport = new ExtendViewport(640,480, cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        backgroundImage.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
-        stage.addActor(backgroundImage);
+        bgImg.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
+        stage.addActor(bgImg);
+        bgImg.setPosition(0,0);
+        bgImg.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
 
         MainTable = new Table();
         stage.addActor(MainTable); // Add the MainTable to the stage first
         MainTable.setFillParent(true); // Now set FillParent to true
 
         MainTable.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
-        MainTable.center();
-        MainTable.setDebug(true);
+        MainTable.setPosition(0,0);
+        //MainTable.setDebug(true);
     }
 
     @Override
@@ -70,7 +84,7 @@ public class MainMenu extends ScreenAdapter  { //implements screen?
 
     private TextButton addButton(String name){
         TextButton button = new TextButton(name, skin);
-        MainTable.add(button).width((float) Gdx.graphics.getWidth() / 2 ).height(80).padBottom(10);
+        MainTable.add(button).width(MainTable.getWidth() / 2).height(80).padBottom(10);
         MainTable.row();
         return button;
     }
@@ -78,20 +92,22 @@ public class MainMenu extends ScreenAdapter  { //implements screen?
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(.4f,.5f,.7f,1);
+        cam.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        viewport.apply();
-        gamemap.batch.setProjectionMatrix(viewport.getCamera().combined);
+        gamemap.batch.setProjectionMatrix(cam.combined);
 
         stage.act(Gdx.graphics.getDeltaTime()); //el act registra clicks, mov mouse, boludeces
         stage.draw();
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        // no resizing of MainTable necessary here as the stage handles it
+        cam.position.set(cam.viewportWidth/2, cam.viewportHeight / 2f, 0);
         stage.getViewport().update(width, height, true);
 
     }
@@ -114,7 +130,5 @@ public class MainMenu extends ScreenAdapter  { //implements screen?
     @Override
     public void dispose() {
         stage.dispose();
-
-
     }
 }
