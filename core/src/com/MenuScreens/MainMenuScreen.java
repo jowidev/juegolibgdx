@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
@@ -30,6 +31,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
     private final OrthographicCamera cam;
     private final Table MainTable;
     public Gamemap gamemap;
+
     public MainMenuScreen(final Gamemap gamemap) {
         this.assets = gamemap.assets;
         Texture backgroundTexture = new Texture(Gdx.files.internal("miscAssets/fnaf.jpg"));
@@ -37,31 +39,27 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         skin = assets.manager.get(SKIN);
 
         this.gamemap = gamemap;
-        //OrthographicCamera cam = new OrthographicCamera();
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, Constants.GAME_WORLD_WIDTH_tile, Constants.GAME_WORLD_HEIGHT_tile);
+        cam.setToOrtho(false,800, 600);
 
 
         //cam.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
 
 
 
-        viewport = new ExtendViewport(640,480, cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
+        viewport = new FitViewport(640,480, cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-
         bgImg.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
         stage.addActor(bgImg);
-        bgImg.setPosition(0,0);
-        bgImg.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
 
         MainTable = new Table();
-        stage.addActor(MainTable); // Add the MainTable to the stage first
-        MainTable.setFillParent(true); // Now set FillParent to true
+        stage.addActor(MainTable);
+        MainTable.setFillParent(true);
 
         MainTable.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
         MainTable.setPosition(0,0);
-        //MainTable.setDebug(true);
+        MainTable.setDebug(true);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         addButton("Jugar").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                gamemap.setScreen(new GameScreen(gamemap)); //aca se lo p   asa pq lo usa el boulder
+                gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
             }
         });
 
