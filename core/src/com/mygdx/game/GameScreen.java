@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -30,6 +31,11 @@ public class GameScreen implements Screen {
     private final Music mainsong;
     public Stage stage;
     public Gamemap gamemap; //el de arriba
+    public Float time;
+    public int roundedTime;
+    public HUD hud;
+
+
     @Override
     public void show() {
 
@@ -55,6 +61,9 @@ public class GameScreen implements Screen {
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
         //mainsong.play();
         this.Boulder = new Boulder(gamemap);
+        time = 300f;
+        roundedTime = time.intValue();
+
     }
 
 
@@ -106,8 +115,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(.4f,.6f,.8f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput();
-
-        // Set the projection matrix for your batch
+        time-=Gdx.graphics.getDeltaTime();
+        roundedTime = time.intValue();
+        hud.updateTimeLabel(roundedTime);
         gamemap.batch.setProjectionMatrix(camera.combined);
 
         mapRenderer.setView((OrthographicCamera)viewport.getCamera());
@@ -156,6 +166,9 @@ public class GameScreen implements Screen {
 
     }
 
+    public int getRoundedTime() {
+        return roundedTime;
+    }
     @Override
     public void dispose() {
         //se llama cuando se cierra el programa

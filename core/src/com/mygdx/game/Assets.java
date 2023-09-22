@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
 
 
 public class Assets {
-	public AssetManager manager = new AssetManager();
+	public static AssetManager manager = new AssetManager();
 	public final Array<AtlasRegion> slimewalk;
 	public final Array<AtlasRegion> boulderwalk;
 	public final Music trumpsong;

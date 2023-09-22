@@ -7,11 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Gamemap extends Game {
-	public FitViewport viewport;
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 	public Assets assets;
 
-	public static Sound sound;
 
 	@Override
 	public void create() {
