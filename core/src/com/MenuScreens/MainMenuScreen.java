@@ -8,13 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
@@ -47,24 +45,18 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
 
 
-        viewport = new FitViewport(640,480, cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
+        viewport = new ScreenViewport(cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        bgImg.setSize(640, 480);
+        bgImg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(bgImg);
 
         MainTable = new Table();
         stage.addActor(MainTable);
         MainTable.setFillParent(true);
 
-        MainTable.setSize(viewport.getScreenWidth(), viewport.getScreenHeight());
         MainTable.setPosition(0,0);
-        //MainTable.setDebug(true);
-    }
-
-    @Override
-    public void show() {
-        //MainTable.setFillParent(true);
+        MainTable.setDebug(true);
         addButton("Jugar").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -80,12 +72,19 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         });
     }
 
+    @Override
+    public void show() {
+        //MainTable.setFillParent(true);
+
+    }
+
     private TextButton addButton(String name){
         TextButton button = new TextButton(name, skin);
-        MainTable.add(button).width(MainTable.getWidth() / 2).height(80).padBottom(10);
+        MainTable.add(button).width((float) Gdx.graphics.getWidth() / 2).height((float) Gdx.graphics.getHeight() /8).padBottom(10);
         MainTable.row();
         return button;
     }
+
 
     @Override
     public void render(float delta) {
@@ -93,7 +92,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         cam.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        gamemap.batch.setProjectionMatrix(cam.combined);
+        Gamemap.batch.setProjectionMatrix(cam.combined);
 
         stage.act(Gdx.graphics.getDeltaTime()); //el act registra clicks, mov mouse, boludeces
         stage.draw();
@@ -104,25 +103,10 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
     @Override
     public void resize(int width, int height) {
-        //viewport.update(width, height);
-        cam.position.set(cam.viewportWidth/2, cam.viewportHeight / 2f, 0);
+        cam.viewportWidth = width;
+        cam.viewportHeight = height;
+        cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);
         stage.getViewport().update(width, height, true);
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     @Override

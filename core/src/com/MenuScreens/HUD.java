@@ -1,9 +1,10 @@
 package com.MenuScreens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
 import com.mygdx.game.GameScreen;
@@ -17,8 +18,13 @@ public class HUD extends Table {
     public Skin skin;
     public HUD() {
          skin = Assets.manager.get(SKIN);
+        //float floatValue = GameScreen.time; // Assuming GameScreen.time is a float
+        //int intValue = Math.round(floatValue); // Round and convert to int
+        //Label time = new Label(Integer.toString(intValue), skin);
+        Texture imageTexture = new Texture(Gdx.files.internal("miscAssets/AngyBowler.png"));
+        Image image = new Image(imageTexture);
+        Label label = new Label("ha", skin);
 
-        Label time = new Label("Time: 300", skin);
         slimeTable = new Table();
         timerTable = new Table();
         boulderTable = new Table();
@@ -38,7 +44,7 @@ public class HUD extends Table {
         slimeTable.padTop(24);
         timerTable.padTop(16);
         boulderTable.padTop(24);
-
+        
 
         slimeTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padLeft(16).padBottom(24);; //this line
         slimeTable.row();
@@ -50,7 +56,7 @@ public class HUD extends Table {
             slimeTable.row();
         }
 
-        timerTable.add(time).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*3)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)); //ACA SE AÑADE EL TIMER
+        timerTable.add(image).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*2)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)); //ACA SE AÑADE EL TIMER
 
         boulderTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padRight(16).padBottom(24);; //this line
         boulderTable.row();
@@ -61,10 +67,7 @@ public class HUD extends Table {
             boulderTable.row();
         }
     }
-    public void updateTimeLabel(Label time) {
-        int roundedTime = GameScreen.getRoundedTime(); // Get the current rounded time from GameScreen
-        time.setText("Time: " + roundedTime);
-    }
+
 
     public Table getSlimeTable() {
         return slimeTable;
