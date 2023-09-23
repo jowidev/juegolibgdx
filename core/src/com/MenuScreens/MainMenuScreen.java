@@ -3,19 +3,17 @@ package com.MenuScreens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Assets;
-import com.mygdx.game.Constants;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Gamemap;
 
@@ -23,19 +21,15 @@ import static com.mygdx.game.Assets.SKIN;
 
 public class MainMenuScreen extends ScreenAdapter  { //implements screen?
     private final Stage stage;
-    private final Viewport viewport;
-    private Assets assets;
     private final Skin skin;
     private final OrthographicCamera cam;
     private final Table MainTable;
     public Gamemap gamemap;
 
     public MainMenuScreen(final Gamemap gamemap) {
-        this.assets = gamemap.assets;
-        Texture backgroundTexture = new Texture(Gdx.files.internal("miscAssets/fnaf.jpg"));
-        Image bgImg = new Image(backgroundTexture);
-        skin = assets.manager.get(SKIN);
-
+        Assets assets = gamemap.assets;
+        Image bgImg = new Image(assets.bgTxT);
+        skin = Assets.manager.get(SKIN);
         this.gamemap = gamemap;
         cam = new OrthographicCamera();
         cam.setToOrtho(false,800, 600);
@@ -44,8 +38,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         //cam.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
 
 
-
-        viewport = new ScreenViewport(cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
+        Viewport viewport = new ScreenViewport(cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         bgImg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -57,25 +50,22 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
         MainTable.setPosition(0,0);
         MainTable.setDebug(true);
-        addButton("Jugar").addListener(new ClickListener(){
+        MainTable.add(bgImg).width((float) Gdx.graphics.getWidth() /1.5f).height((float) Gdx.graphics.getHeight() /5.5f).padBottom((float) Gdx.graphics.getHeight() /5);
+
+        MainTable.row();
+        addButton("Play").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
             }
         });
 
-        addButton("Salir").addListener(new ClickListener(){
+        addButton("Exit").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 Gdx.app.exit();
             }
         });
-    }
-
-    @Override
-    public void show() {
-        //MainTable.setFillParent(true);
-
     }
 
     private TextButton addButton(String name){
@@ -96,11 +86,15 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
         stage.act(Gdx.graphics.getDeltaTime()); //el act registra clicks, mov mouse, boludeces
         stage.draw();
+        handleInput();
+    }
+
+    public void handleInput () {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-    }
 
+    }
     @Override
     public void resize(int width, int height) {
         cam.viewportWidth = width;

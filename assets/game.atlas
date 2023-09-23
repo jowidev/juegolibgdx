@@ -1,89 +1,96 @@
 
 game.png
-size: 1024, 128
+size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 slimes/Player Roll 48x48
   rotate: false
-  xy: 2, 68
+  xy: 1004, 954
   size: 336, 48
   orig: 336, 48
   offset: 0, 0
   index: -1
 slimes/planta
   rotate: false
-  xy: 340, 68
+  xy: 1342, 954
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 0
 slimes/planta
   rotate: false
-  xy: 256, 18
+  xy: 1004, 838
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 1
 slimes/planta
   rotate: false
-  xy: 390, 68
+  xy: 1258, 904
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 2
 slimes/planta
   rotate: false
-  xy: 306, 18
+  xy: 1392, 954
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 3
 slimes/planta
   rotate: false
-  xy: 440, 68
+  xy: 1004, 788
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 4
 slimes/planta
   rotate: false
-  xy: 356, 18
+  xy: 1054, 838
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 5
 slimes/planta
   rotate: false
-  xy: 490, 68
+  xy: 1308, 904
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 6
 slimes/planta
   rotate: false
-  xy: 406, 18
+  xy: 1442, 954
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 7
 slimes/planta
   rotate: false
-  xy: 540, 68
+  xy: 1004, 738
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 8
 slimes/planta
   rotate: false
-  xy: 456, 18
+  xy: 1054, 788
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 9
-slimes/slimesheet
+slimes/slimeCurr
   rotate: false
   xy: 2, 2
+  size: 1000, 1000
+  orig: 1000, 1000
+  offset: 0, 0
+  index: -1
+slimes/slimesheet
+  rotate: false
+  xy: 1004, 888
   size: 252, 64
   orig: 252, 64
   offset: 0, 0
@@ -116,9 +123,23 @@ miscAssets/AngyBowler
   index: -1
 miscAssets/fnaf
   rotate: false
-  xy: 1924, 1382
+  xy: 1924, 300
   size: 960, 540
   orig: 960, 540
+  offset: 0, 0
+  index: -1
+miscAssets/minecraft
+  rotate: false
+  xy: 1924, 842
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+miscAssets/niggakiss
+  rotate: false
+  xy: 2886, 464
+  size: 376, 376
+  orig: 376, 376
   offset: 0, 0
   index: -1
 
@@ -150,56 +171,63 @@ tilemap/RPG_Nature_Tileset_Autumn
   index: -1
 
 game5.png
-size: 512, 64
+size: 512, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 boulders/boulder
   rotate: false
-  xy: 2, 2
+  xy: 2, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 0
 boulders/boulder
   rotate: false
-  xy: 52, 2
+  xy: 262, 430
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 1
 boulders/boulder
   rotate: false
-  xy: 102, 2
+  xy: 2, 52
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 2
 boulders/boulder
   rotate: false
-  xy: 152, 2
+  xy: 52, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 3
 boulders/boulder
   rotate: false
-  xy: 202, 2
+  xy: 262, 380
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 4
 boulders/boulder
   rotate: false
-  xy: 252, 2
+  xy: 312, 430
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 5
 boulders/boulder
   rotate: false
-  xy: 302, 2
+  xy: 2, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 6
+boulders/boulderCurr
+  rotate: false
+  xy: 2, 152
+  size: 258, 326
+  orig: 258, 326
+  offset: 0, 0
+  index: -1

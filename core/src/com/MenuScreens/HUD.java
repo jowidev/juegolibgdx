@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
 import com.mygdx.game.GameScreen;
+import org.w3c.dom.Text;
 
 import static com.mygdx.game.Assets.SKIN;
 
@@ -21,17 +22,22 @@ public class HUD extends Table {
         //float floatValue = GameScreen.time; // Assuming GameScreen.time is a float
         //int intValue = Math.round(floatValue); // Round and convert to int
         //Label time = new Label(Integer.toString(intValue), skin);
-        Texture imageTexture = new Texture(Gdx.files.internal("miscAssets/AngyBowler.png"));
+        //Texture sign = Assets.manager.get();
+        Texture slimeTexture = new Texture("miscAssets/minecraft.jpg");
+        Texture imageTexture = new Texture(Gdx.files.internal("boulders/boulderCurr.png"));
+        Texture slimeTxt = new Texture(Gdx.files.internal("slimes/slimeCurr.png"));
+        Image slimeImage = new Image(slimeTxt); // Create a new Image instance
+        Image signImg = new Image(slimeTexture);
+
         Image image = new Image(imageTexture);
-        Label label = new Label("ha", skin);
 
         slimeTable = new Table();
         timerTable = new Table();
         boulderTable = new Table();
 
-        slimeTable.setDebug(true);
-        timerTable.setDebug(true);
-        boulderTable.setDebug(true);
+        //slimeTable.setDebug(true);
+        //timerTable.setDebug(true);
+        //boulderTable.setDebug(true);
 
         slimeTable.top().left();
         timerTable.center().top();
@@ -46,23 +52,31 @@ public class HUD extends Table {
         boulderTable.padTop(24);
         
 
-        slimeTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padLeft(16).padBottom(24);; //this line
+        slimeTable.add(slimeImage).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padLeft(16).padBottom(24);; //this line
         slimeTable.row();
 
-        for (int row = 0; row < 5; row++) { //slime
+        for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 1; col++) {
-                slimeTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2.5f)).padLeft(16);
+                slimeImage = new Image(slimeTxt); // Create a new Image instance
+                slimeTable.add(slimeImage)
+                        .width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
+                        .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2.5f))
+                        .padLeft(16);
             }
             slimeTable.row();
         }
 
-        timerTable.add(image).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*2)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)); //ACA SE AÑADE EL TIMER
+        timerTable.add(signImg).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*2)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)); //ACA SE AÑADE EL TIMER
 
-        boulderTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padRight(16).padBottom(24);; //this line
+        boulderTable.add(image).width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2)).padRight(16).padBottom(24);; //this line
         boulderTable.row();
-        for (int row = 0; row < 5; row++) { //boulder
+        for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 1; col++) {
-                boulderTable.add().width(Gdx.graphics.getWidth()*(Constants.pixeltotile*1.5f)).height(Gdx.graphics.getHeight()*(Constants.pixeltotile*2.5f)).padRight(16);
+                Image boulderImage = new Image(imageTexture); // Create a new Image instance
+                boulderTable.add(boulderImage)
+                        .width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
+                        .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2.5f))
+                        .padRight(16);
             }
             boulderTable.row();
         }

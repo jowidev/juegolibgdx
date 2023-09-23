@@ -24,27 +24,37 @@ public class Assets {
 	public final Music finalbattle;
 	public final Sound slimeplaced;
 	private final TextureAtlas atlas;
+	public Texture bgTxT;
 	public static Sound boulderPlaced;
+	public Texture slimeCurr;
+	public Texture boulderCurr;
+	public Texture sign;
 	public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/freezing-ui.json", Skin.class, new SkinLoader.SkinParameter("skin/freezing-ui.atlas"));
 	public Assets() {
 		manager.load("game.atlas", TextureAtlas.class);
+		manager.load("slimes/slimeCurr.png", Texture.class);
 		manager.load(SKIN);
+		manager.load("miscAssets/minecraft.jpg", Texture.class);
 		manager.load("miscAssets/trumpsong.mp3", Music.class);
 		manager.load("miscAssets/finalbattle.mp3", Music.class);
 		manager.load("slimes/slimeplaced.mp3", Sound.class);
 		manager.load("boulders/boulderPlaced.mp3", Sound.class);
-
-		//meter aca todo lo que hay que cargar
+		manager.load("boulders/boulderCurr.png", Texture.class);
+		manager.load("miscAssets/minecraft.jpg", Texture.class);
+		//meter acatodo lo que hay que cargar
 		manager.finishLoading();
 
 		this.atlas = manager.get("game.atlas");
         this.slimewalk = atlas.findRegions("slimes/planta");
         this.boulderwalk = atlas.findRegions("boulders/boulder");
-		//assert boulderwalk.size!=0:"no se cargo el boulder";
 		this.trumpsong= manager.get("miscAssets/trumpsong.mp3");
 		this.finalbattle = manager.get("miscAssets/finalbattle.mp3");
 		this.slimeplaced = manager.get("slimes/slimeplaced.mp3");
 		this.boulderPlaced = manager.get("boulders/boulderPlaced.mp3");
+		this.bgTxT = manager.get("miscAssets/minecraft.jpg");
+		this.slimeCurr = manager.get("slimes/slimeCurr.png");
+		this.boulderCurr = manager.get("boulders/boulderCurr.png");
+		this.sign = manager.get("miscAssets/minecraft.jpg");
 
 		//hacertodo lo de los assets aca
 

@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
         HUD hud = new HUD();
         camera = new OrthographicCamera();
         stage = new Stage();
-        //stage.addActor(grid);
+        stage.addActor(grid);
         stage.addActor(hud.getSlimeTable());
         stage.addActor(hud.getTimerTable());
         stage.addActor(hud.getBoulderHud());
@@ -107,10 +107,10 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)&&songPlaying) {
-            mainsong.pause();
+            mainsong.setVolume(.0f);
             songPlaying = false;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)&&!songPlaying) {
-            mainsong.play();
+            mainsong.setVolume(.07f);
             songPlaying = true;
         }
     }
@@ -133,8 +133,7 @@ public class GameScreen implements Screen {
         if (Boulder != null) {
             Boulder.update(viewport);
         }
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
+
 
         Gamemap.batch.begin();
         if (Boulder != null) {
@@ -145,20 +144,11 @@ public class GameScreen implements Screen {
         }
 
         Gamemap.batch.end();
-
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
     }
-    private float accumulator = 0;
 
-    /*private void doPhysicsStep(float deltaTime) {
-        // fixed time step
-        // max frame time to avoid spiral of death (on slow devices)
-        float frameTime = Math.min(deltaTime, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= Constants.TIME_STEP) {
-            WorldManager.world.step(Constants.TIME_STEP, Constants.VELOCITY_ITERATIONS, Constants.POSITION_ITERATIONS);
-            accumulator -= Constants.TIME_STEP;
-        }
-    }*/
+
 
 
     @Override
