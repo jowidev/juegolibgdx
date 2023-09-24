@@ -13,9 +13,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class GameScreen implements Screen {
@@ -60,6 +60,7 @@ public class GameScreen implements Screen {
         this.map = new TmxMapLoader().load("tilemap/tilemap.tmx"); 		// mandarlo al assetmanager dsp si hincha las bolas
         mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, Gamemap.batch); // Create the map renderer
         this.viewport = new FitViewport(Constants.GAME_WORLD_WIDTH_tile,Constants.GAME_WORLD_HEIGHT_tile, camera);
+
         //camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
         mainsong.play();
@@ -71,11 +72,9 @@ public class GameScreen implements Screen {
 
 
     private void handleInput() {
-        /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
-            camera.translate(-.09f, 0, 0);
+        /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) { camera.translate(-.09f, 0, 0);
             if (camera.position.x<=camera.viewportWidth / 2) {
-                camera.translate(.09f, 0, 0);
-            }
+                camera.translate(.09f, 0, 0);}
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
             camera.translate(.09f, 0, 0);
             if (camera.position.x>= Constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
@@ -106,7 +105,7 @@ public class GameScreen implements Screen {
             Gdx.app.exit();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)&&songPlaying) {
-            mainsong.setVolume(.0f);
+            mainsong.setVolume(0);
             songPlaying = false;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)&&!songPlaying) {
             mainsong.setVolume(.07f);
@@ -117,22 +116,24 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.4f,.6f,.8f,1);
+        Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        camera.update();
         handleInput();
-        time-=Gdx.graphics.getDeltaTime();
-        System.out.println(time);
+        time -= Gdx.graphics.getDeltaTime(); // EL TIMER
+
+        viewport.apply(); // Apply the viewport here
+
         Gamemap.batch.setProjectionMatrix(camera.combined);
-        mapRenderer.setView((OrthographicCamera)viewport.getCamera());
+        mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         mapRenderer.render();
+
         if (Slime != null) {
             Slime.update(viewport);
         }
         if (Boulder != null) {
             Boulder.update(viewport);
         }
-
 
         Gamemap.batch.begin();
         if (Boulder != null) {
@@ -143,17 +144,19 @@ public class GameScreen implements Screen {
         }
 
         Gamemap.batch.end();
-        stage.act(Gdx.graphics.getDeltaTime());
+        //stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
 
 
 
+
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
-        camera.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
+        viewport.update(width, height, true);
+        camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight() /2 , 0);
+        stage.getViewport().update(width, height, true);
     }
 
 
