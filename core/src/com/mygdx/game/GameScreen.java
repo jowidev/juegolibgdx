@@ -63,7 +63,6 @@ public class GameScreen implements Screen {
         //camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
         mainsong.play();
-        Assets.boulderPlaced.setVolume( 0, .01f);
 
         //this.Boulder = new Boulder(gamemap);
         time = 300f;

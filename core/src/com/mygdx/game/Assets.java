@@ -1,15 +1,11 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,22 +21,27 @@ public class Assets {
 	public final Sound slimeplaced;
 	private final TextureAtlas atlas;
 	public Texture bgTxT;
-	public static Sound boulderPlaced;
+	public Sound boulderPlaced;
 	public Texture slimeCurr;
 	public Texture boulderCurr;
-	public Texture sign;
+	public static Texture sign;
+	public Texture currBg;
+	public Texture troopBg;
 	public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/freezing-ui.json", Skin.class, new SkinLoader.SkinParameter("skin/freezing-ui.atlas"));
 	public Assets() {
 		manager.load("game.atlas", TextureAtlas.class);
 		manager.load("slimes/slimeCurr.png", Texture.class);
 		manager.load(SKIN);
 		manager.load("miscAssets/minecraft.jpg", Texture.class);
+		manager.load("miscAssets/currBg.png", Texture.class);
 		manager.load("miscAssets/trumpsong.mp3", Music.class);
 		manager.load("miscAssets/finalbattle.mp3", Music.class);
 		manager.load("slimes/slimeplaced.mp3", Sound.class);
 		manager.load("boulders/boulderPlaced.mp3", Sound.class);
 		manager.load("boulders/boulderCurr.png", Texture.class);
-		manager.load("miscAssets/minecraft.jpg", Texture.class);
+		manager.load("miscAssets/Timer.png", Texture.class);
+		manager.load("miscAssets/TroopBg.png", Texture.class);
+
 		//meter acatodo lo que hay que cargar
 		manager.finishLoading();
 
@@ -53,8 +54,10 @@ public class Assets {
 		this.boulderPlaced = manager.get("boulders/boulderPlaced.mp3");
 		this.bgTxT = manager.get("miscAssets/minecraft.jpg");
 		this.slimeCurr = manager.get("slimes/slimeCurr.png");
+		this.currBg = manager.get("miscAssets/currBg.png");
 		this.boulderCurr = manager.get("boulders/boulderCurr.png");
-		this.sign = manager.get("miscAssets/minecraft.jpg");
+		this.sign = manager.get("miscAssets/Timer.png");
+		this.troopBg = manager.get("miscAssets/TroopBg.png");
 
 		//hacertodo lo de los assets aca
 

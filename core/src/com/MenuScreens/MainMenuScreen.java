@@ -49,11 +49,11 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         MainTable.setFillParent(true);
 
         MainTable.setPosition(0,0);
-        MainTable.setDebug(true);
-        MainTable.add(bgImg).width((float) Gdx.graphics.getWidth() /1.5f).height((float) Gdx.graphics.getHeight() /5.5f).padBottom((float) Gdx.graphics.getHeight() /5);
+        //MainTable.setDebug(true);
+        MainTable.add(bgImg).width((float) Gdx.graphics.getWidth() /1.5f).height((float) Gdx.graphics.getHeight() /5.5f).padBottom((float) Gdx.graphics.getHeight() /4.5f);
 
         MainTable.row();
-        addButton("Play").addListener(new ClickListener(){
+        addButton("Jugar").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
@@ -70,7 +70,7 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
 
     private TextButton addButton(String name){
         TextButton button = new TextButton(name, skin);
-        MainTable.add(button).width((float) Gdx.graphics.getWidth() / 2).height((float) Gdx.graphics.getHeight() /8).padBottom(10);
+        MainTable.add(button).width((float) Gdx.graphics.getWidth() / 3).height((float) Gdx.graphics.getHeight() /8).padBottom(10);
         MainTable.row();
         return button;
     }

@@ -116,28 +116,49 @@ filter: Nearest, Nearest
 repeat: none
 miscAssets/AngyBowler
   rotate: false
-  xy: 2, 2
+  xy: 2, 124
   size: 1920, 1920
   orig: 1920, 1920
   offset: 0, 0
   index: -1
+miscAssets/Timer
+  rotate: false
+  xy: 2, 2
+  size: 288, 120
+  orig: 288, 120
+  offset: 0, 0
+  index: -1
+miscAssets/TroopBg
+  rotate: false
+  xy: 3846, 1876
+  size: 168, 168
+  orig: 168, 168
+  offset: 0, 0
+  index: -1
+miscAssets/currBg
+  rotate: false
+  xy: 1924, 336
+  size: 196, 84
+  orig: 196, 84
+  offset: 0, 0
+  index: -1
 miscAssets/fnaf
   rotate: false
-  xy: 1924, 300
+  xy: 1924, 422
   size: 960, 540
   orig: 960, 540
   offset: 0, 0
   index: -1
 miscAssets/minecraft
   rotate: false
-  xy: 1924, 842
+  xy: 1924, 964
   size: 1920, 1080
   orig: 1920, 1080
   offset: 0, 0
   index: -1
 miscAssets/niggakiss
   rotate: false
-  xy: 2886, 464
+  xy: 2886, 586
   size: 376, 376
   orig: 376, 376
   offset: 0, 0
