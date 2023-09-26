@@ -2,7 +2,11 @@ package com.MenuScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
 
@@ -29,6 +33,16 @@ public class HUD extends Table {
         Texture troopBG = new Texture(Gdx.files.internal("miscAssets/TroopBg.png"));
         Image troopImage = new Image(troopBG);
         Image image = new Image(imageTexture);
+        TextureRegionDrawable buttonImage = new TextureRegionDrawable(new TextureRegion(slimeTxt));
+        ImageButton imageButton = new ImageButton(buttonImage);
+
+        imageButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // This code will run when the button is clicked
+                System.out.println("Button clicked!");
+            }
+        });
 
 
         //stack.add(label);
@@ -42,7 +56,7 @@ public class HUD extends Table {
 
 
         //slimeTable.setDebug(true);
-        //timerTable.setDebug(true);
+        timerTable.setDebug(true);
         //boulderTable.setDebug(true);
 
         slimeTable.top().left();
@@ -59,7 +73,7 @@ public class HUD extends Table {
 
         Stack slimeCurr = new Stack();
         slimeCurr.add(currBg);
-        slimeCurr.add(slimeImage);
+        slimeCurr.add(imageButton);
         slimeTable.add(slimeCurr).
                 width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f)).height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).
                 padLeft(16).padBottom(24);
@@ -81,15 +95,20 @@ public class HUD extends Table {
             slimeTable.row();
         }
 
+
+
         timerTable.add(signImg).width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 2))
                 .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)); //ACA SE AÑADE EL TIMER
+
+
+
 
         Stack boulderCurr = new Stack();
         boulderCurr.add(currBg);
         boulderCurr.add(image);
         boulderTable.add(boulderCurr).width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
                 .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).padRight(16).padBottom(24);
-        ; //this line
+        //this line
         boulderTable.row();
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 1; col++) {

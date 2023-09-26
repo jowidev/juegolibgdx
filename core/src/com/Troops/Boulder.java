@@ -53,7 +53,7 @@ public class Boulder {
 
 	}
 	public void render() {
-		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+		stateTime += Gdx.graphics.getDeltaTime();
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
 		Gamemap.batch.draw(currentFrame, boulderpos.x, boulderpos.y,2,2);
 	}

@@ -41,7 +41,6 @@ public class GameScreen implements Screen {
     }
     public GameScreen(Gamemap gamemap) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
-        world = new World(new Vector2(0, -10), true);
 
 
         Grid grid = new Grid();
@@ -72,27 +71,7 @@ public class GameScreen implements Screen {
 
 
     private void handleInput() {
-        /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT) ) { camera.translate(-.09f, 0, 0);
-            if (camera.position.x<=camera.viewportWidth / 2) {
-                camera.translate(.09f, 0, 0);}
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {		//NO PUEDE SER LO HICE SIN CHATGPT OJO ROCKSTAR
-            camera.translate(.09f, 0, 0);
-            if (camera.position.x>= Constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
-                camera.translate(-.09f, 0, 0);
-            }
-        } //MOUSE v
-        if (Gdx.input.getX() >= Gdx.graphics.getWidth() - 150  &&  Gdx.input.getX() <= Gdx.graphics.getWidth()) {
-            camera.translate(.15f, 0, 0);
-            if (camera.position.x>= Constants.GAME_WORLD_WIDTH_tile - camera.viewportWidth / 2) {
-                camera.translate(-.15f, 0, 0);
-            }
-        }
-        if (Gdx.input.getX() <= 150  &&  Gdx.input.getX() >= 0) {
-            camera.translate(-.15f, 0, 0);
-            if (camera.position.x <= camera.viewportWidth / 2) {
-                camera.translate(.15f, 0, 0);
-            }
-        }*/
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             this.Slime = new Slime(gamemap);
         }
@@ -117,14 +96,14 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
-        handleInput();
-        time -= Gdx.graphics.getDeltaTime(); // EL TIMER
 
-        viewport.apply(); // Apply the viewport here
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         Gamemap.batch.setProjectionMatrix(camera.combined);
+
+        viewport.apply(); // Apply the viewport here
+        stage.act(Gdx.graphics.getDeltaTime());
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         mapRenderer.render();
 
@@ -146,6 +125,8 @@ public class GameScreen implements Screen {
         Gamemap.batch.end();
         //stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        handleInput();
+        time -= Gdx.graphics.getDeltaTime(); // EL TIMER
     }
 
 
@@ -154,10 +135,14 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        // Update the game viewport
         viewport.update(width, height, true);
-        camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight() /2 , 0);
+        camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+
+        // Update the stage's viewport
         stage.getViewport().update(width, height, true);
     }
+
 
 
     @Override
