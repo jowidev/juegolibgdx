@@ -23,8 +23,10 @@ public class Boulder {
 	private boolean boulderOnMouse;
 	Random random = new Random();
 	int randomNumber = random.nextInt(5) + 1;
+	float boulderW, boulderH;
 
-
+	public Rectangle boulderHitbox = new Rectangle(); //shape crea el coso
+	// shaperenderer muestra el coso
 	public Boulder(Gamemap game) {
 		stateTime = 0;
 		this.game = game;
@@ -35,8 +37,25 @@ public class Boulder {
 	}
 
 
+	public void Hitbox() {
+		boulderHitbox.set(boulderpos.x, boulderpos.y, boulderW, boulderH);
+	}
 
-	public void update(Viewport viewport) {
+	public void HitboxCheck(Slime slime) {
+		// Update the boulder's hitbox
+		Hitbox();
+
+		// Check for collision with the slime
+		if (boulderHitbox.overlaps(slime.slimeHitbox)) {
+				boulderpos.x -= 0;
+		}
+		else {
+			boulderpos.x -= 2*Gdx.graphics.getDeltaTime();
+
+		}
+	}
+
+	public void update(Viewport viewport, Slime slime) {
 		if(!boulderOnMouse ) {
 			Vector3 position = viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
 			boulderpos.x = position.x-1;
@@ -46,9 +65,10 @@ public class Boulder {
 			boulderOnMouse = true;
 			game.assets.boulderPlaced.play();
 		}
-		boulderpos.x -= 2*Gdx.graphics.getDeltaTime();
-
+		HitboxCheck(slime);
 	}
+
+
 	public void show() {
 
 	}

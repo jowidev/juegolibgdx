@@ -1,12 +1,8 @@
 package com.mygdx.game;
 
-import com.MenuScreens.HUD;
 import com.MenuScreens.MainMenuScreen;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Gamemap extends Game {
 	public static SpriteBatch batch;

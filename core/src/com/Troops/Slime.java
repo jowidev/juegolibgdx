@@ -5,10 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Constants;
 import com.mygdx.game.Gamemap;
 
 public class Slime {
@@ -18,6 +19,10 @@ public class Slime {
 	public float stateTime;
 	public Vector2 slimepos;
 	public boolean slimeOnMouse;
+	public float SlimeW, SlimeH;
+
+	public Rectangle slimeHitbox = new Rectangle();
+
 
 	public Slime(Gamemap game) {
 		slimeOnMouse = false;
@@ -25,6 +30,12 @@ public class Slime {
 		this.game = game;
 		idleanimation = new Animation<TextureRegion>(0.033f, game.assets.slimewalk, PlayMode.LOOP);
 		slimepos= new Vector2(0,0);
+		slimeHitbox.set(slimepos.x, slimepos.y, SlimeW, SlimeH);
+
+	}
+	public void Hitbox() {
+		//slimeHitbox.set(slimepos.x, slimepos.y, SlimeW, SlimeH);
+
 	}
 
 	public void update(Viewport viewport){
@@ -41,8 +52,8 @@ public class Slime {
 
 
 	public void render() {
-		stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+		stateTime += Gdx.graphics.getDeltaTime();
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
-		Gamemap.batch.draw(currentFrame, slimepos.x, slimepos.y,2,2); // Draw current frame at (50, 50)
+		Gamemap.batch.draw(currentFrame, slimepos.x, slimepos.y,2,2);
 	}
 }

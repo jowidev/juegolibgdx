@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.util.ArrayList;
+
 public class GameScreen implements Screen {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
@@ -29,22 +31,20 @@ public class GameScreen implements Screen {
     private final Music mainsong;
     public Stage stage;
     public Gamemap gamemap; //el de arriba
-
-    public World world;
     public static Float time;
     public boolean songPlaying;
 
-
-    @Override
+    private ArrayList<Slime> slimes;
     public void show() {
 
     }
     public GameScreen(Gamemap gamemap) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
 
-
+       // Slime[] slimes = new Slime[30];
+        slimes = new ArrayList<Slime>(30);
         Grid grid = new Grid();
-        HUD hud = new HUD();
+        HUD hud = new HUD(gamemap);
         camera = new OrthographicCamera();
         stage = new Stage();
         stage.addActor(grid);
@@ -60,20 +60,20 @@ public class GameScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(map, Constants.pixeltotile, Gamemap.batch); // Create the map renderer
         this.viewport = new FitViewport(Constants.GAME_WORLD_WIDTH_tile,Constants.GAME_WORLD_HEIGHT_tile, camera);
 
-        //camera = viewport.getCamera();
         camera.position.set(Constants.GAME_WORLD_WIDTH_tile/2, Constants.GAME_WORLD_HEIGHT_tile/2, 0);
         mainsong.play();
 
-        //this.Boulder = new Boulder(gamemap);
         time = 300f;
 
     }
 
 
     private void handleInput() {
-
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             this.Slime = new Slime(gamemap);
+            slimes.add(Slime);
+            //slimes[i] = new Slime(gamemap);
+            //slimes.add(newSlime);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
@@ -95,8 +95,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.4f, .6f, .8f, 1);
+        Gdx.gl.glClearColor(.2f, .5f, .7f, 1);
         camera.update();
+        mainsong.play();
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -106,12 +107,12 @@ public class GameScreen implements Screen {
         stage.act(Gdx.graphics.getDeltaTime());
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         mapRenderer.render();
-
+        Slime dummySlime = new Slime(gamemap);
         if (Slime != null) {
             Slime.update(viewport);
         }
         if (Boulder != null) {
-            Boulder.update(viewport);
+            Boulder.update(viewport, dummySlime);
         }
 
         Gamemap.batch.begin();

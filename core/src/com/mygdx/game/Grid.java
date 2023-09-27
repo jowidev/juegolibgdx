@@ -17,7 +17,7 @@ public class Grid extends Table {
         }
 
         setPosition(0, 0);
-        setDebug(true);
+        //setDebug(true);
     }
 
 }

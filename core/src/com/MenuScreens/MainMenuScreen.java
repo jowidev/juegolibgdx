@@ -2,40 +2,41 @@ package com.MenuScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Assets;
-import com.mygdx.game.GameScreen;
 import com.mygdx.game.Gamemap;
 
 import static com.mygdx.game.Assets.SKIN;
 
-public class MainMenuScreen extends ScreenAdapter  { //implements screen?
+public class MainMenuScreen implements Screen { //implements screen?
     private final Stage stage;
     private final Skin skin;
     private final OrthographicCamera cam;
     private final Table MainTable;
     public Gamemap gamemap;
+    private Music menuSong;
 
     public MainMenuScreen(final Gamemap gamemap) {
         Assets assets = gamemap.assets;
-        Image bgImg = new Image(assets.bgTxT);
+        Texture bg = gamemap.assets.bgTxT;
+        Image bgImg = new Image(bg);
         skin = Assets.manager.get(SKIN);
         this.gamemap = gamemap;
         cam = new OrthographicCamera();
         cam.setToOrtho(false,800, 600);
-
-
-        //cam.position.set(Constants.GAME_WORLD_WIDTH_tile / 2, Constants.GAME_WORLD_HEIGHT_tile / 2, 0);
+        menuSong = gamemap.assets.trumpsong;
+        menuSong.play();
+        menuSong.setVolume(.1f);
 
 
         Viewport viewport = new ScreenViewport(cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
@@ -56,20 +57,36 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         addButton("Jugar").
                 addListener(
                         new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
-            }
+                        @Override
+                        public void clicked(InputEvent event, float x, float y){
+                            gamemap.setScreen(new TeamSelScreen(gamemap));
+                            menuSong.dispose();
+                        }
         });
+
+        addButton("Donate").
+                addListener(
+                        new ClickListener(){
+                            @Override
+                            public void clicked(InputEvent event, float x, float y){
+                                String websiteURL = "https://ko-fi.com/goatedjowi";
+                                Gdx.net.openURI(websiteURL);
+
+                            }
+                        }
+                );
 
         addButton("Exit").
                 addListener(
                         new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.exit();
-            }
+                        @Override
+                        public void clicked(InputEvent event, float x, float y){
+                            Gdx.app.exit();
+
+                        }
         });
+
+
     }
 
     private TextButton addButton(String name){
@@ -79,6 +96,11 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
         return button;
     }
 
+
+    @Override
+    public void show() {
+
+    }
 
     @Override
     public void render(float delta) {
@@ -108,7 +130,23 @@ public class MainMenuScreen extends ScreenAdapter  { //implements screen?
     }
 
     @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
     public void dispose() {
         stage.dispose();
+        menuSong.dispose();
     }
 }

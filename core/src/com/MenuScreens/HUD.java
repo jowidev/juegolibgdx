@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Constants;
+import com.mygdx.game.Gamemap;
 
 import static com.mygdx.game.Assets.*;
 
@@ -17,77 +20,78 @@ public class HUD extends Table {
     private final Table timerTable;
     private final Table boulderTable;
     public Skin skin;
-    public HUD() {
+    public HUD(Gamemap game) {
         skin = Assets.manager.get(SKIN);
-        //float floatValue = GameScreen.time; // Assuming GameScreen.time is a float
-        //int intValue = Math.round(floatValue); // Round and convert to int
-        //Label time = new Label(Integer.toString(intValue), skin);
-        //Texture sign = Assets.manager.get();
-        Texture slimeTexture = new Texture(String.valueOf(Assets.manager.get(String.valueOf(sign))));
-        Texture imageTexture = new Texture(Gdx.files.internal("boulders/boulderCurr.png"));
-        Texture slimeTxt = new Texture(Gdx.files.internal("slimes/slimeCurr.png"));
-        Texture currencyBg = new Texture(Gdx.files.internal("miscAssets/currBg.png"));
-        Image slimeImage = new Image(slimeTxt);
-        Image signImg = new Image(slimeTexture);
-        Image currBg = new Image(currencyBg);
-        Texture troopBG = new Texture(Gdx.files.internal("miscAssets/TroopBg.png"));
-        Image troopImage = new Image(troopBG);
-        Image image = new Image(imageTexture);
-        TextureRegionDrawable buttonImage = new TextureRegionDrawable(new TextureRegion(slimeTxt));
-        ImageButton imageButton = new ImageButton(buttonImage);
 
-        imageButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // This code will run when the button is clicked
-                System.out.println("Button clicked!");
-            }
-        });
+        Texture signImg = game.assets.timerBg;
+        Image timerBg = new Image(signImg);
+
+        Texture boulderCurr = game.assets.boulderCurr;
+        Image boulderCurrImg = new Image(boulderCurr);
+
+        Texture slimeCurr = game.assets.slimeCurr;
+        Image slimeCurrImg = new Image(slimeCurr);
+
+        Texture currBg = game.assets.currBg;
+        Image currBgImg = new Image(currBg);
+
+        Texture troopBgImg = game.assets.troopBg;
+        Image troopBg = new Image(troopBgImg);
+
+        //TextureRegionDrawable buttonImage = new TextureRegionDrawable(new TextureRegion(slimeCurrImg));
+        //ImageButton imageButton = new ImageButton(buttonImage);
 
 
-        //stack.add(label);
-        //table.add(stack);
 
         slimeTable = new Table();
         timerTable = new Table();
         boulderTable = new Table();
-
-
-
+        slimeTable.setTouchable(Touchable.enabled);
+        boulderTable.setTouchable(Touchable.enabled);
+        timerTable.setTouchable(Touchable.enabled);
 
         //slimeTable.setDebug(true);
-        timerTable.setDebug(true);
+        //timerTable.setDebug(true);
         //boulderTable.setDebug(true);
 
-        slimeTable.top().left();
-        timerTable.center().top();
-        boulderTable.left().top();
+        slimeTable.top().left().padTop(24);
+        timerTable.center().top().padTop(16);
+        boulderTable.left().top().padTop(24);
 
         slimeTable.setPosition(0, Gdx.graphics.getHeight());
         timerTable.setPosition((float) Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
         boulderTable.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() * (Constants.pixeltotile * 2f)), Gdx.graphics.getHeight());
 
-        slimeTable.padTop(24);
-        timerTable.padTop(16);
-        boulderTable.padTop(24);
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(slimeCurr));
+        ImageButton playButton = new ImageButton(drawable);
 
-        Stack slimeCurr = new Stack();
-        slimeCurr.add(currBg);
-        slimeCurr.add(imageButton);
-        slimeTable.add(slimeCurr).
-                width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f)).height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button clicked!");
+            }
+        });
+        playButton.setSize(100, 50);
+
+
+        Stack SlimeStack = new Stack();
+        SlimeStack.add(currBgImg);
+        SlimeStack.add(slimeCurrImg);
+
+        slimeTable.add(SlimeStack).
+                width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f)).
+                height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).
                 padLeft(16).padBottom(24);
         slimeTable.row();
 
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 1; col++) {
-                slimeImage = new Image(slimeTxt); // Create a new Image instance
-                Stack stack = new Stack();
-                troopImage = new Image(troopBG);
-
-                stack.add(troopImage);
-                stack.add(slimeImage);
-                slimeTable.add(stack)
+                Stack slimeLoop = new Stack(); //no se pueden mostrar tablas simultaneamente ojo chatpgt ily
+                slimeCurrImg = new Image(slimeCurr);
+                currBgImg = new Image(troopBgImg);
+                slimeLoop.add(currBgImg);
+                slimeLoop.add(slimeCurrImg);
+                slimeTable.add(slimeLoop)
                         .width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
                         .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2.5f))
                         .padLeft(16);
@@ -97,27 +101,24 @@ public class HUD extends Table {
 
 
 
-        timerTable.add(signImg).width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 2))
-                .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)); //ACA SE AÑADE EL TIMER
+        Stack boulderStack = new Stack();
+        boulderStack.add(currBgImg);
+        boulderStack.add(boulderCurrImg);
 
-
-
-
-        Stack boulderCurr = new Stack();
-        boulderCurr.add(currBg);
-        boulderCurr.add(image);
-        boulderTable.add(boulderCurr).width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
-                .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).padRight(16).padBottom(24);
-        //this line
+        boulderTable.add(boulderStack).
+                width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
+                .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)).
+                padRight(16).padBottom(24);
         boulderTable.row();
+
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 1; col++) {
-                Image boulderImage = new Image(imageTexture);
+                Image boulderImage = new Image(boulderCurr);
                 Stack boulderLoop = new Stack();
-                currBg = new Image(troopBG);
-                //boulderCurr = new Image(image);
-                boulderLoop.add(currBg);
+                currBgImg = new Image(troopBgImg);
+                boulderLoop.add(currBgImg);
                 boulderLoop.add(boulderImage);
+
                 boulderTable.add(boulderLoop)
                         .width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
                         .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2.5f))
@@ -125,6 +126,11 @@ public class HUD extends Table {
             }
             boulderTable.row();
         }
+
+        timerTable.add(timerBg).
+                width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 2))
+                .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2)); //ACA SE AÑADE EL TIMER
+
     }
 
 
