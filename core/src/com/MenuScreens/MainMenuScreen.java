@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen { //implements screen?
         this.gamemap = gamemap;
         cam = new OrthographicCamera();
         cam.setToOrtho(false,800, 600);
-        menuSong = gamemap.assets.trumpsong;
+        menuSong = gamemap.assets.selSong;
         menuSong.play();
         menuSong.setVolume(.1f);
 

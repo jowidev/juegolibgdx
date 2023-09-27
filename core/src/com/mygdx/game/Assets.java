@@ -27,12 +27,14 @@ public class Assets {
 	public Texture timerBg;
 	public Texture currBg;
 	public Texture troopBg;
+	public Music selSong;
 	public Texture bando;
 	public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>("skin/freezing-ui.json", Skin.class, new SkinLoader.SkinParameter("skin/freezing-ui.atlas"));
 	public Assets() {
 		manager.load("game.atlas", TextureAtlas.class);
 		manager.load("slimes/slimeCurr.png", Texture.class);
 		manager.load(SKIN);
+		manager.load("miscAssets/trumpsong.mp3", Music.class);
 		manager.load("miscAssets/bando.png", Texture.class);
 		manager.load("miscAssets/logo.png", Texture.class);
 		manager.load("miscAssets/currBg.png", Texture.class);
@@ -57,6 +59,7 @@ public class Assets {
 		this.bgTxT = manager.get("miscAssets/logo.png");
 		this.bando = manager.get("miscAssets/bando.png");
 		this.slimeCurr = manager.get("slimes/slimeCurr.png");
+		this.selSong = manager.get("miscAssets/trumpsong.mp3");
 		this.currBg = manager.get("miscAssets/currBg.png");
 		this.boulderCurr = manager.get("boulders/boulderCurr.png");
 		this.timerBg = manager.get("miscAssets/Timer.png");

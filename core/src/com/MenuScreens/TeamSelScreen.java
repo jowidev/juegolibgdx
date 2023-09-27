@@ -3,6 +3,7 @@ package com.MenuScreens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,13 +24,13 @@ public class TeamSelScreen implements Screen {
     private final OrthographicCamera cam;
     private final Stage stage;
     public Skin skin;
+    public Music selSong;
     private Table teamTable;
     public TeamSelScreen(final Gamemap gamemap) {
         skin = Assets.manager.get(SKIN);
         Texture bando = gamemap.assets.bando;
         Image bandoImg = new Image(bando);
-
-
+        selSong = gamemap.assets.trumpsong;
         cam = new OrthographicCamera();
         cam.setToOrtho(false,800, 600);
 
@@ -55,7 +56,7 @@ public class TeamSelScreen implements Screen {
                             @Override
                             public void clicked(InputEvent event, float x, float y){
                                 gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
-
+                                selSong.dispose();
                             }
                         });
         addButton("Boulders").
@@ -64,6 +65,7 @@ public class TeamSelScreen implements Screen {
                             @Override
                             public void clicked(InputEvent event, float x, float y){
                                 gamemap.setScreen(new GameScreen(gamemap));
+                                selSong.dispose();
                             }
                         }
                 );
@@ -89,6 +91,8 @@ public class TeamSelScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(.4f,.5f,.7f,1);
         cam.update();
+        selSong.play();
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
         batch.setProjectionMatrix(cam.combined);
