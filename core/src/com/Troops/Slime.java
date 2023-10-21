@@ -17,43 +17,41 @@ public class Slime {
 	private final Gamemap game;
 	public Animation<TextureRegion> idleanimation;
 	public float stateTime;
-	public Vector2 slimepos;
 	public boolean slimeOnMouse;
 	public float SlimeW, SlimeH;
 
 	public Rectangle slimeHitbox = new Rectangle();
+	//private final ShapeRenderer shR;
 
-
-	public Slime(Gamemap game) {
+	public Slime(Gamemap game, int x, int y) {
 		slimeOnMouse = false;
 		stateTime = 0;
 		this.game = game;
 		idleanimation = new Animation<TextureRegion>(0.033f, game.assets.slimewalk, PlayMode.LOOP);
-		slimepos= new Vector2(0,0);
-		slimeHitbox.set(slimepos.x, slimepos.y, SlimeW, SlimeH);
-
+		slimeHitbox.set(x,y, SlimeW, SlimeH);
 	}
-	public void Hitbox() {
-		//slimeHitbox.set(slimepos.x, slimepos.y, SlimeW, SlimeH);
+	public void update(Viewport viewport) {
+		if (!slimeOnMouse) {
+			Vector3 pos = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			slimeHitbox.x = pos.x - 1;
+			slimeHitbox.y = pos.y -1;
+			slimeHitbox.setPosition(slimeHitbox.x, slimeHitbox.y); // Update hitbox position
 
-	}
-
-	public void update(Viewport viewport){
-		if(!slimeOnMouse) {
-			Vector3 position = viewport.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
-			slimepos.x = position.x-1;
-			slimepos.y = position.y-1;
+		}     if (slimeOnMouse) {
+			slimeHitbox.setPosition(slimeHitbox.x, slimeHitbox.y); // Update hitbox position to follow the slime
 		}
-		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !slimeOnMouse) {
+		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !slimeOnMouse) {
 			slimeOnMouse = true;
 			game.assets.slimeplaced.play();
 		}
-	}
 
+	}
 
 	public void render() {
 		stateTime += Gdx.graphics.getDeltaTime();
 		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
-		Gamemap.batch.draw(currentFrame, slimepos.x, slimepos.y,2,2);
+		Gamemap.batch.draw(currentFrame, slimeHitbox.x, slimeHitbox.y, 2, 2);
+
+
 	}
 }

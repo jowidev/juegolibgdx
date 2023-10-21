@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
+import com.MenuScreens.Grid;
 import com.MenuScreens.HUD;
+import com.MenuScreens.MainMenuScreen;
+import com.MenuScreens.TeamSelScreen;
 import com.Troops.Boulder;
 import com.Troops.Slime;
 import com.badlogic.gdx.Gdx;
@@ -12,13 +15,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
+
+import static com.MenuScreens.TeamSelScreen.Team.SLIME;
 
 public class GameScreen implements Screen {
     private final TiledMap map;
@@ -38,9 +40,8 @@ public class GameScreen implements Screen {
     public void show() {
 
     }
-    public GameScreen(Gamemap gamemap) {  //este
+    public GameScreen(Gamemap gamemap, TeamSelScreen.Team team) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
-
        // Slime[] slimes = new Slime[30];
         slimes = new ArrayList<Slime>(30);
         Grid grid = new Grid();
@@ -48,9 +49,13 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         stage = new Stage();
         stage.addActor(grid);
-        stage.addActor(hud.getSlimeTable());
+
+        if (team.equals(TeamSelScreen.Team.SLIME)) {
+            stage.addActor(hud.getSlimeTable());
+        } else if (team.equals(TeamSelScreen.Team.BOULDER)){
+            stage.addActor(hud.getBoulderHud());
+        }
         stage.addActor(hud.getTimerTable());
-        stage.addActor(hud.getBoulderHud());
         Gdx.input.setInputProcessor(stage);
         mainsong = gamemap.assets.finalbattle;
         mainsong.setLooping(true);
@@ -70,18 +75,23 @@ public class GameScreen implements Screen {
 
     private void handleInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-            this.Slime = new Slime(gamemap);
+            this.Slime = new Slime(gamemap, Gdx.input.getX(),Gdx.input.getY());
             slimes.add(Slime);
             //slimes[i] = new Slime(gamemap);
             //slimes.add(newSlime);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-            this.Boulder = new Boulder(gamemap);
+            this.Boulder = new Boulder(gamemap, Gdx.input.getX(), Gdx.input.getY());
+
 
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+            gamemap.setScreen(new MainMenuScreen(gamemap));
+            map.dispose();
+            mapRenderer.dispose();
+            mainsong.dispose();
+            stage.dispose();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)&&songPlaying) {
             mainsong.setVolume(0);
@@ -103,13 +113,14 @@ public class GameScreen implements Screen {
 
         Gamemap.batch.setProjectionMatrix(camera.combined);
 
-        viewport.apply(); // Apply the viewport here
+        viewport.apply();
         stage.act(Gdx.graphics.getDeltaTime());
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         mapRenderer.render();
-        Slime dummySlime = new Slime(gamemap);
+        Slime dummySlime = new Slime(gamemap, 1,1);
         if (Slime != null) {
             Slime.update(viewport);
+
         }
         if (Boulder != null) {
             Boulder.update(viewport, dummySlime);
@@ -121,6 +132,7 @@ public class GameScreen implements Screen {
         }
         if (Slime != null) {
             Slime.render();
+
         }
 
         Gamemap.batch.end();

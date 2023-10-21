@@ -64,7 +64,7 @@ public class MainMenuScreen implements Screen { //implements screen?
                         }
         });
 
-        addButton("Donate").
+        addButton("Donar").
                 addListener(
                         new ClickListener(){
                             @Override
@@ -76,7 +76,7 @@ public class MainMenuScreen implements Screen { //implements screen?
                         }
                 );
 
-        addButton("Exit").
+        addButton("Salir").
                 addListener(
                         new ClickListener(){
                         @Override

@@ -43,42 +43,44 @@ public class TeamSelScreen implements Screen {
         stage.addActor(teamTable);
         teamTable.setFillParent(true);
         teamTable.setPosition(0,0);
-        teamTable.center();
-        teamTable.add(bandoImg);
+        teamTable.add(bandoImg).expandX();
         teamTable.row();
-        teamTable.add().
-                width(Gdx.graphics.getWidth()/2).
-                height(Gdx.graphics.getHeight()/2).
-                padBottom(Gdx.graphics.getHeight()/4);
-        addButton("Slimes").
+        selSong.setVolume(.1f);
+
+        addButton("Boulders").center().
                 addListener(
                         new ClickListener(){
                             @Override
                             public void clicked(InputEvent event, float x, float y){
-                                gamemap.setScreen(new GameScreen(gamemap)); //aca se lo pasa pq lo usa el boulder
-                                selSong.dispose();
-                            }
-                        });
-        addButton("Boulders").
-                addListener(
-                        new ClickListener(){
-                            @Override
-                            public void clicked(InputEvent event, float x, float y){
-                                gamemap.setScreen(new GameScreen(gamemap));
+                                gamemap.setScreen(new GameScreen(gamemap, Team.BOULDER));
                                 selSong.dispose();
                             }
                         }
                 );
+        addButton("Slimes").center().
+                addListener(
+                        new ClickListener(){
+                            @Override
+                            public void clicked(InputEvent event, float x, float y){
+                                gamemap.setScreen(new GameScreen(gamemap, Team.SLIME)); //aca se lo pasa pq lo usa el boulder
+                                selSong.dispose();
 
-        //teamTable.setDebug(true);
+                            }
+                        });
+        teamTable.row();
 
+
+        teamTable.setDebug(true);
+
+    }
+    public enum Team {
+        SLIME, BOULDER;
     }
     private TextButton addButton(String name){
         TextButton button = new TextButton(name, skin);
         teamTable.add(button).
                 width((float) Gdx.graphics.getWidth() / 5)
-                .height((float) Gdx.graphics.getHeight() /5)
-                .center();
+                .height((float) Gdx.graphics.getHeight() /4);
         return button;
     }
 

@@ -84,7 +84,7 @@ public class HUD extends Table {
                 padLeft(16).padBottom(24);
         slimeTable.row();
 
-        for (int row = 0; row < 5; row++) {
+        for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 1; col++) {
                 Stack slimeLoop = new Stack(); //no se pueden mostrar tablas simultaneamente ojo chatpgt ily
                 slimeCurrImg = new Image(slimeCurr);
@@ -95,6 +95,8 @@ public class HUD extends Table {
                         .width(Gdx.graphics.getWidth() * (Constants.pixeltotile * 1.5f))
                         .height(Gdx.graphics.getHeight() * (Constants.pixeltotile * 2.5f))
                         .padLeft(16);
+                slimeLoop.add(currBgImg);
+
             }
             slimeTable.row();
         }
@@ -111,7 +113,7 @@ public class HUD extends Table {
                 padRight(16).padBottom(24);
         boulderTable.row();
 
-        for (int row = 0; row < 5; row++) {
+        for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 1; col++) {
                 Image boulderImage = new Image(boulderCurr);
                 Stack boulderLoop = new Stack();
