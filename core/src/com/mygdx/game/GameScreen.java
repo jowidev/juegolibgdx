@@ -117,13 +117,12 @@ public class GameScreen implements Screen {
         stage.act(Gdx.graphics.getDeltaTime());
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         mapRenderer.render();
-        Slime dummySlime = new Slime(gamemap, 1,1);
         if (Slime != null) {
             Slime.update(viewport);
 
         }
         if (Boulder != null) {
-            Boulder.update(viewport, dummySlime);
+            Boulder.update(viewport, Slime);
         }
 
         Gamemap.batch.begin();

@@ -1,21 +1,14 @@
 package com.Troops;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.BaseTroop;
 import com.mygdx.game.Gamemap;
-
-import javax.swing.text.View;
-import java.util.Random;
 
 public class Boulder extends BaseTroop {
 	private final Gamemap game;
@@ -28,12 +21,12 @@ public class Boulder extends BaseTroop {
 	public Rectangle boulderHitbox = new Rectangle(); //shape crea el coso
 	// shaperenderer muestra el coso
 	public Boulder(Gamemap game, int x, int y) {
-		super(x, y);
+		super(x, y, 2, 2);
 		stateTime = 0;
 		this.game = game;
 		boulderW = 1;
 		boulderH = 1;
-		idleanimation = new Animation<TextureRegion>(0.5f/7, game.assets.boulderwalk, PlayMode.LOOP);
+		idleanimation = new Animation<TextureRegion>(.7f/7, game.assets.boulderwalk, PlayMode.LOOP);
 		boulderHitbox.set(x,y, boulderW, boulderH);
 	}
 
@@ -43,6 +36,7 @@ public class Boulder extends BaseTroop {
 
 		if (boulderHitbox.overlaps(slime.slimeHitbox)) {
 				boulderHitbox.x -=.0f*Gdx.graphics.getDeltaTime();
+				slime.takeDamage(1);
 		}
 		else {
 			boulderHitbox.x -= 2*Gdx.graphics.getDeltaTime();
