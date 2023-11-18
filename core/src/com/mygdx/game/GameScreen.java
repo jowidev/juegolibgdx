@@ -4,6 +4,7 @@ import com.MenuScreens.Grid;
 import com.MenuScreens.HUD;
 import com.MenuScreens.MainMenuScreen;
 import com.MenuScreens.TeamSelScreen;
+import com.Troops.BaseTroop;
 import com.Troops.Boulder;
 import com.Troops.Slime;
 import com.badlogic.gdx.Gdx;
@@ -36,14 +37,14 @@ public class GameScreen implements Screen {
     public static Float time;
     public boolean songPlaying;
 
-    private ArrayList<Slime> slimes;
+    private ArrayList<BaseTroop> troopArr;
     public void show() {
 
     }
     public GameScreen(Gamemap gamemap, TeamSelScreen.Team team) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
-       // Slime[] slimes = new Slime[30];
-        slimes = new ArrayList<Slime>(30);
+        //Slime[] slimes = new Slime[30];
+        troopArr = new ArrayList<BaseTroop>();
         Grid grid = new Grid();
         HUD hud = new HUD(gamemap);
         camera = new OrthographicCamera();
@@ -76,14 +77,13 @@ public class GameScreen implements Screen {
     private void handleInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             this.Slime = new Slime(gamemap, Gdx.input.getX(),Gdx.input.getY());
-            slimes.add(Slime);
-            //slimes[i] = new Slime(gamemap);
-            //slimes.add(newSlime);
+            troopArr.add(Slime);
+
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
             this.Boulder = new Boulder(gamemap, Gdx.input.getX(), Gdx.input.getY());
-
+            troopArr.add(Boulder);
 
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
             Slime.render();
 
         }
-
+        System.out.println(troopArr);
         Gamemap.batch.end();
         //stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
