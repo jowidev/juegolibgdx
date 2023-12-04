@@ -13,7 +13,6 @@ import com.mygdx.game.Gamemap;
 public class Boulder extends BaseTroop {
 	private final Gamemap game;
 	public float stateTime;
-	public Animation<TextureRegion> idleanimation;
 	private boolean boulderOnMouse;
 	float boulderW, boulderH;
 
@@ -21,12 +20,12 @@ public class Boulder extends BaseTroop {
 	public Rectangle boulderHitbox = new Rectangle(); //shape crea el coso
 	// shaperenderer muestra el coso
 	public Boulder(Gamemap game, int x, int y) {
-		super(x, y, 2, 2);
+		super(x, y, 2, 2, 150);
 		stateTime = 0;
 		this.game = game;
 		boulderW = 1;
 		boulderH = 1;
-		idleanimation = new Animation<TextureRegion>(.7f/7, game.assets.boulderwalk, PlayMode.LOOP);
+		baseAnimation = new Animation<TextureRegion>(.7f/7, game.assets.boulderwalk, PlayMode.LOOP);
 		boulderHitbox.set(x,y, boulderW, boulderH);
 	}
 
@@ -60,7 +59,7 @@ public class Boulder extends BaseTroop {
 
 	public void render() {
 		stateTime += Gdx.graphics.getDeltaTime();
-		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
+		TextureRegion currentFrame = baseAnimation.getKeyFrame(stateTime, true);
 		Gamemap.batch.draw(currentFrame, boulderHitbox.x, boulderHitbox.y,2,2);
 	}
 

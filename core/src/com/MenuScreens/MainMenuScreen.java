@@ -27,7 +27,6 @@ public class MainMenuScreen implements Screen { //implements screen?
     private Music menuSong;
 
     public MainMenuScreen(final Gamemap gamemap) {
-        Assets assets = gamemap.assets;
         Texture bg = gamemap.assets.bgTxT;
         Image bgImg = new Image(bg);
         skin = Assets.manager.get(SKIN);
@@ -39,7 +38,7 @@ public class MainMenuScreen implements Screen { //implements screen?
         menuSong.setVolume(.1f);
 
 
-        Viewport viewport = new ScreenViewport(cam);  //no pasar  GAME_WORLD_HEIGHT NI WIDTH, no tiene nada que ver con el coso este
+        Viewport viewport = new ScreenViewport(cam);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         bgImg.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

@@ -43,7 +43,6 @@ public class GameScreen implements Screen {
     }
     public GameScreen(Gamemap gamemap, TeamSelScreen.Team team) {  //este
         this.gamemap = gamemap; //al de arriba le paso este
-        //Slime[] slimes = new Slime[30];
         troopArr = new ArrayList<BaseTroop>();
         Grid grid = new Grid();
         HUD hud = new HUD(gamemap);
@@ -124,14 +123,13 @@ public class GameScreen implements Screen {
         if (Boulder != null) {
             Boulder.update(viewport, Slime);
         }
-
+        System.out.println(time);
         Gamemap.batch.begin();
         if (Boulder != null) {
             Boulder.render();
         }
         if (Slime != null) {
             Slime.render();
-
         }
         System.out.println(troopArr);
         Gamemap.batch.end();
@@ -139,6 +137,7 @@ public class GameScreen implements Screen {
         stage.draw();
         handleInput();
         time -= Gdx.graphics.getDeltaTime(); // EL TIMER
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
 

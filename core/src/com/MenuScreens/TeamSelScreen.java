@@ -33,9 +33,6 @@ public class TeamSelScreen implements Screen {
         selSong = gamemap.assets.trumpsong;
         cam = new OrthographicCamera();
         cam.setToOrtho(false,800, 600);
-
-
-
         final Viewport viewport = new ScreenViewport(cam);
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
@@ -43,7 +40,7 @@ public class TeamSelScreen implements Screen {
         stage.addActor(teamTable);
         teamTable.setFillParent(true);
         teamTable.setPosition(0,0);
-        teamTable.add(bandoImg).expandX();
+        teamTable.add(bandoImg);
         teamTable.row();
         selSong.setVolume(.1f);
 
@@ -70,7 +67,7 @@ public class TeamSelScreen implements Screen {
         teamTable.row();
 
 
-        teamTable.setDebug(true);
+        //teamTable.setDebug(true);
 
     }
     public enum Team {

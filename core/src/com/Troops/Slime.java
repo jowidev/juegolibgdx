@@ -13,19 +13,17 @@ import com.mygdx.game.Gamemap;
 public class Slime extends BaseTroop {
 
 	private final Gamemap game;
-	public Animation<TextureRegion> idleanimation;
 	public float stateTime;
 	public boolean slimeOnMouse;
-	public float SlimeW, SlimeH;
 
 	public Rectangle slimeHitbox = new Rectangle();
 
 	public Slime(Gamemap game, int x, int y) {
-		super(x, y, 2, 2);
+		super(x, y, 2, 2, 100);
 		slimeOnMouse = false;
 		stateTime = 0;
 		this.game = game;
-		idleanimation = new Animation<TextureRegion>(0.033f, game.assets.slimewalk, PlayMode.LOOP);
+		baseAnimation = new Animation<TextureRegion>(0.033f, game.assets.slimewalk, PlayMode.LOOP);
 	}
 	public void update(Viewport viewport) {
 		if (!slimeOnMouse) {
@@ -45,7 +43,7 @@ public class Slime extends BaseTroop {
 
 	public void render() {
 		stateTime += Gdx.graphics.getDeltaTime();
-		TextureRegion currentFrame = idleanimation.getKeyFrame(stateTime, true);
+		TextureRegion currentFrame = baseAnimation.getKeyFrame(stateTime, true);
 		Gamemap.batch.draw(currentFrame, slimeHitbox.x, slimeHitbox.y, 2, 2);
 
 

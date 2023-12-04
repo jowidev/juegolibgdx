@@ -1,14 +1,18 @@
 package com.Troops;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class BaseTroop {
     protected float hp;
     public Rectangle hitbox = new Rectangle();
+    protected Animation<TextureRegion> baseAnimation;
 
-    public BaseTroop(int x, int y, float width, float height) {
+    public BaseTroop(int x, int y, float width, float height, float hp) {
         hitbox.set(x, y, width, height);
-        hp = 100; // Set an initial health value
+        this.hp = hp;
+
     }
 
     public void takeDamage(int damage) {
@@ -26,5 +30,4 @@ public class BaseTroop {
         this.hp = hp;
     }
 
-    // Add other common methods or attributes here
 }
